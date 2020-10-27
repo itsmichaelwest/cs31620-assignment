@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/bnav_phrases">
+
+    <fragment
+        android:id="@+id/bnav_phrases"
+        android:name="uk.ac.aber.dcs.cs31620.phrasepad.PhrasesFragment"
+        android:label="fragment_phrases"
+        tools:layout="@layout/fragment_phrases" />
+</navigation>

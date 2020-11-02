@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar = binding.toolbar
+        val toolbar = binding.toolbar.toolbar
 
         val mOnNavigationItemSelectedListener = Toolbar.OnMenuItemClickListener {item ->
             when (item.itemId) {
@@ -28,5 +28,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 }

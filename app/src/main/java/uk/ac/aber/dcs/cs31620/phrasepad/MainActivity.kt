@@ -3,7 +3,11 @@ package uk.ac.aber.dcs.cs31620.phrasepad
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,5 +33,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    fun showAddPhraseFragment(view: View) {
+        var fragment = AddPhraseFragment()
+        fragment.show(supportFragmentManager, "add_phrase_fragment")
     }
 }

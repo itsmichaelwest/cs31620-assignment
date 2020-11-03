@@ -5,6 +5,9 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryColor</item>
+        <item name="android:navigationBarColor">@color/primaryColor</item>
+
+        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>
     </style>
 
     <style name="Base_ToolbarStyle">
@@ -31,5 +34,15 @@
         <item name="android:fontFamily">@font/merriweather_bold</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- BottomNavigationView -->
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
     </style>
 </resources>

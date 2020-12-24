@@ -19,6 +19,7 @@ class LanguageTests {
         assertEquals(Locale.ENGLISH, english.locale)
     }
 
+    /*
     @Test
     fun createPhrasebookWithTwoLanguages() {
         val phrasebook = Phrasebook(Language("English", Locale.ENGLISH), Language("Welsh", Locale("cy_gb")))
@@ -47,4 +48,5 @@ class LanguageTests {
         phrasebook.addPhrase("morning", "bore da")
 
     }
+     */
 }

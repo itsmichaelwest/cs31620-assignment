@@ -8,4 +8,8 @@ class Language(langName: String, langLocale: Locale) {
 
     // Empty constructor to create a default object.
     constructor(): this("", Locale.ENGLISH) {}
+
+    override fun toString(): String {
+        return "$name $locale"
+    }
 }

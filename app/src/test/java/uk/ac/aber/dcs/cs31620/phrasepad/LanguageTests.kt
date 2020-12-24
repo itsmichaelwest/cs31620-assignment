@@ -3,7 +3,6 @@ package uk.ac.aber.dcs.cs31620.phrasepad
 import org.junit.Test
 import org.junit.Assert.*
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrasebook
 import java.util.*
 
 class LanguageTests {

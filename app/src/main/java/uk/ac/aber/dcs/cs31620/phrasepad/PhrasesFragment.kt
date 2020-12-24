@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
 
 /**
@@ -37,6 +38,8 @@ class PhrasesFragment : Fragment() {
             layoutManager = viewManager
             // adapter = viewAdapter
         }
+
+        val repository = PhrasepadRepository(requireActivity().application)
 
         return fragmentPhrasesBinding.root
     }

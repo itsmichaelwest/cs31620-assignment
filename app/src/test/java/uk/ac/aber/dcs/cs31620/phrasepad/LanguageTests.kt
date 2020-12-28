@@ -6,10 +6,11 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import java.util.*
 
 class LanguageTests {
+    /*
     @Test
     fun createEmptyModel() {
         val english = Language()
-        assertEquals("", english.name)
+        assertEquals("", english)
     }
 
     @Test
@@ -19,7 +20,6 @@ class LanguageTests {
         assertEquals(Locale.ENGLISH, english.locale)
     }
 
-    /*
     @Test
     fun createPhrasebookWithTwoLanguages() {
         val phrasebook = Phrasebook(Language("English", Locale.ENGLISH), Language("Welsh", Locale("cy_gb")))

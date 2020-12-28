@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/bnav_phrases"
-        android:icon="@drawable/ic_fluent_book_24_regular"
+        android:icon="@drawable/bnav_phrases_selector"
         android:title="Phrases" />
     <item
         android:id="@+id/bnav_search"
-        android:icon="@drawable/ic_fluent_search_24_regular"
+        android:icon="@drawable/bnav_search_selector"
         android:title="Search" />
     <item
         android:id="@+id/bnav_quiz"
-        android:icon="@drawable/ic_fluent_quiz_new_24_regular"
+        android:icon="@drawable/bnav_quiz_selector"
         android:title="Quizes" />
 </menu>

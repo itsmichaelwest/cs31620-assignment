@@ -2,9 +2,7 @@ package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -14,12 +12,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.toolbar_hero.view.*
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
-import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.AddPhraseFragment
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhraseAddFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
@@ -54,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = toolbarHeroBinding.toolbar
         toolbar.inflateMenu(R.menu.toolbar)
 
-        binding.toolbar.toolbar.setOnMenuItemClickListener{ menuItem ->
+        binding.toolbar2.toolbar.setOnMenuItemClickListener{ menuItem ->
             when (menuItem.itemId) {
                 R.id.tb_settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
@@ -87,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showAddPhraseFragment(view: View) {
-        var fragment = AddPhraseFragment()
+        var fragment = PhraseAddFragment()
         fragment.show(supportFragmentManager, "add_phrase_fragment")
     }
 }

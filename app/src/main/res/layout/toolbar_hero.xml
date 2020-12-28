@@ -7,7 +7,7 @@
     android:layout_height="?attr/actionBarSize"
     app:layout_scrollFlags="scroll|enterAlways"
     app:menu="@menu/toolbar"
-    style="@style/Widget.MaterialComponents.Toolbar.Primary">
+    style="@style/PhrasePad.Toolbar">
 
     <ImageView
         android:id="@+id/lang_flag"

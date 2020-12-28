@@ -8,29 +8,31 @@
     android:padding="16dp"
     android:elevation="24dp"
     android:orientation="vertical"
-    style="@style/CustomBottomSheet">
+    android:id="@+id/add_phrase_sheet">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView"
-            style="TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Phrase"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="@string/add_phrase_title"
+            android:textAllCaps="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/dismissButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -45,13 +47,16 @@
         android:id="@+id/editTextOriginLang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textNoSuggestions"
+        app:endIconDrawable="@drawable/ic_fluent_dismiss_24_regular"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
-        app:startIconDrawable="@drawable/it">
+        style="@style/PhrasePad.TextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputOriginLang"
@@ -66,11 +71,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textNoSuggestions"
+        app:endIconDrawable="@drawable/ic_fluent_dismiss_24_regular"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextOriginLang"
-        app:startIconDrawable="@drawable/it">
+        app:startIconDrawable="@drawable/it"
+        style="@style/PhrasePad.TextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputDestLang"
@@ -84,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Save"
+        android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDestLang" />
 

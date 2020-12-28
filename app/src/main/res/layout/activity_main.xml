@@ -14,7 +14,7 @@
         app:liftOnScroll="true">
 
         <include
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             layout="@layout/toolbar_hero" />

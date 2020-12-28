@@ -32,6 +32,8 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_fluent_arrow_left_24_regular)
+
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }

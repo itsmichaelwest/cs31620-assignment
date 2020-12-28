@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">PhrasePad</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="add_phrase_title">Add new phrase</string>
+    <string name="save">Save</string>
 
     <!-- Preference Titles -->
     <string name="languages_header">Languages</string>
@@ -19,4 +21,6 @@
     <!-- Data Management Preferences -->
     <string name="clear_all">Reset phrase book</string>
     <string name="clear_all_summary">This will clear your phrase book. All phrases will be deleted!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

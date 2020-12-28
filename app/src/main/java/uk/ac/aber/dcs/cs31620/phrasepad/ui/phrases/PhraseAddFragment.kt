@@ -3,6 +3,7 @@ package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_add_phrase.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentAddPhraseBinding
@@ -19,14 +21,14 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import java.util.*
 
-class AddPhraseFragment: BottomSheetDialogFragment() {
+class PhraseAddFragment: BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddPhraseBinding
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
+        //setStyle(DialogFragment.STYLE_NORMAL, R.style.PhrasePad_BottomSheet)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 
@@ -48,29 +50,45 @@ class AddPhraseFragment: BottomSheetDialogFragment() {
         }
 
         binding.saveButton.setOnClickListener { view ->
-            Log.d("saveButton", "Selected")
+            if (textInputOriginLang.text.isNullOrEmpty()) {
+                textInputOriginLang.error = "Please enter a phrase"
+            }
+
+            if (textInputDestLang.text.isNullOrEmpty()) {
+                textInputDestLang.error = "Please enter a phrase"
+            }
+
             if (savePhrase(binding.textInputOriginLang.text.toString(), binding.textInputDestLang.text.toString())) {
                 dismiss()
-                getView()?.rootView?.layout?.let { Toast.makeText(it.context, "Successfuly added phrase!", Toast.LENGTH_LONG).show() }
             }
         }
+
+        binding.dismissButton.setOnClickListener { view ->
+            dismiss()
+        }
+
+        binding.editTextOriginLang.requestFocus()
 
         return binding.root
     }
 
-    fun savePhrase(origin: String, destination: String): Boolean {
-        val repository = PhrasepadRepository(requireActivity().application)
+    private fun savePhrase(origin: String, destination: String): Boolean {
+        if (origin.isEmpty() || destination.isEmpty()) {
+            return false
+        } else {
+            val repository = PhrasepadRepository(requireActivity().application)
 
-        val phrase = Phrase(
-            0,
-            sharedPreferences.getString("source_lang", "en"),
-            sharedPreferences.getString("dest_lang", "cy"),
-            origin,
-            destination
-        )
+            val phrase = Phrase(
+                0,
+                sharedPreferences.getString("source_lang", "en"),
+                sharedPreferences.getString("dest_lang", "cy"),
+                origin,
+                destination
+            )
 
-        repository.insert(phrase)
+            repository.insert(phrase)
 
-        return true
+            return true
+        }
     }
 }

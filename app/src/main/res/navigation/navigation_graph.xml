@@ -19,4 +19,9 @@
         android:id="@+id/settingsFragment"
         android:name="uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/bnav_quiz"
+        android:name="uk.ac.aber.dcs.cs31620.phrasepad.ui.quiz.QuizFragment"
+        android:label="fragment_quiz"
+        tools:layout="@layout/fragment_quiz" />
 </navigation>

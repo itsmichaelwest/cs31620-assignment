@@ -2,16 +2,21 @@ package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
+import kotlinx.android.synthetic.main.toolbar_hero.view.*
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.AddPhraseFragment
@@ -21,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var themeListener: SharedPreferences.OnSharedPreferenceChangeListener
+    public lateinit var layout: CoordinatorLayout
 
     override fun onStart() {
         super.onStart()
@@ -60,14 +66,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Set flag based on dest lang preference
-        /*
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        val destLangCode = sharedPreferences.getString("dest_lang", "")
-        Log.d("MainActivity", destLangCode.toString())
+        val destLangCode = sharedPreferences.getString("dest_lang", "cy")
         val flagResId = resources.getIdentifier(destLangCode.toString(), "drawable", packageName)
-        val flagResImage = ResourcesCompat.getDrawable(resources, flagResId, null)
-        toolbar.lang_flag.setImageDrawable(flagResImage)
-         */
+        toolbar.lang_flag.setImageDrawable(ResourcesCompat.getDrawable(resources, flagResId, null))
 
         setSupportActionBar(toolbar)
 
@@ -80,6 +82,8 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(bottomNavigationController, appBarConfiguration)
         bottomNavigation.setupWithNavController(bottomNavigationController)
+
+        layout = findViewById(R.id.layout)
     }
 
     fun showAddPhraseFragment(view: View) {

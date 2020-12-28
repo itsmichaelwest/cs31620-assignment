@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
+import uk.ac.aber.dcs.cs31620.phrasepad.MainActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
@@ -91,7 +93,7 @@ class PhrasesFragment : Fragment() {
                         phraseViewModel.delete(phrase)
 
                         Snackbar.make(
-                            viewHolder.itemView,
+                            activity!!.findViewById(android.R.id.content),
                             "Deleted",
                             Snackbar.LENGTH_LONG
                         ).apply {

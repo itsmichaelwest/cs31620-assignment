@@ -1,7 +1,7 @@
 package uk.ac.aber.dcs.cs31620.phrasepad
 
+import junit.framework.Assert.assertEquals
 import org.junit.Test
-import org.junit.Assert.*
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import java.util.*
 

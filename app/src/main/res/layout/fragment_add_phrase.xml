@@ -54,6 +54,7 @@
         app:startIconDrawable="@drawable/ic__f1ee_1f1f9">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputOriginLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -73,16 +74,17 @@
         style="@style/OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputDestLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDestLang" />

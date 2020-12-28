@@ -24,5 +24,8 @@ interface PhraseDao {
     fun getAllPhrases(): LiveData<List<Phrase>>
 
     @Query("""SELECT * FROM phrases WHERE knownLanguage = :knownLanguage AND unknownLanguage = :unknownLanguage""")
-    fun getPhrases(knownLanguage: String, unknownLanguage: String): LiveData<List<Phrase>>
+    fun getAllLangaugePhrases(knownLanguage: Language, unknownLanguage: Language): LiveData<List<Phrase>>
+
+    @Query("""SELECT * FROM phrases WHERE knownPhrase = :knownPhrase""")
+    fun getKnownPhrase(knownPhrase: String): Phrase
 }

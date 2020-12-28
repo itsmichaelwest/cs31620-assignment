@@ -4,9 +4,9 @@ import androidx.room.*
 
 @Entity(tableName = "phrases")
 data class Phrase (
-    @PrimaryKey val id: Int,
-    var knownLanguage: String,
-    var unknownLanguage: String,
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    var knownLanguage: Language,
+    var unknownLanguage: Language,
     var knownPhrase: String,
     var unknownPhrase: String
 )

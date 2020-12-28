@@ -7,7 +7,7 @@
     tools:context=".ui.phrases.PhrasesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/phrase_recyclerview"
+        android:id="@+id/phrases_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />

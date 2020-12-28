@@ -1,6 +1,7 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +16,17 @@ class PhrasesRecyclerAdapter(private val context: Context?) : RecyclerView.Adapt
 
     inner class ViewHolder(
         itemView: View,
-        val source: TextView,
-        val translated: TextView
+        private val source: TextView,
+        private val translated: TextView
     ): RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener(clickListener)
         }
 
         fun bindData(phrase: Phrase) {
-            source.text = phrase.knownPhrase
-            translated.text = phrase.unknownPhrase
+            Log.d("PhrasesRecyclerBindData", "Binding data (inner)!")
+            source.text = phrase.sourcePhrase
+            translated.text = phrase.destPhrase
         }
     }
 
@@ -44,6 +46,7 @@ class PhrasesRecyclerAdapter(private val context: Context?) : RecyclerView.Adapt
     }
 
     fun changeData(data: MutableList<Phrase>) {
+
         this.data = data
         this.notifyDataSetChanged()
     }

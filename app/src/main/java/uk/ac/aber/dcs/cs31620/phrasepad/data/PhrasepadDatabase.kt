@@ -29,7 +29,7 @@ abstract class PhrasepadDatabase : RoomDatabase() {
         fun getDatabase(context: Context): PhrasepadDatabase? {
             synchronized(this) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder<PhrasepadDatabase>(context.applicationContext, PhrasepadDatabase::class.java, "phrasepad_database").allowMainThreadQueries().addCallback(roomDatabaseCallback(context)).build()
+                    instance = Room.databaseBuilder(context.applicationContext, PhrasepadDatabase::class.java, "phrasepad_database").allowMainThreadQueries().addCallback(roomDatabaseCallback(context)).build()
                 }
                 return instance!!
             }

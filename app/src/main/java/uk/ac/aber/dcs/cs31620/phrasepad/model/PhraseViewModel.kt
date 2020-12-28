@@ -5,32 +5,19 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
-import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 
 class PhraseViewModel(application: Application): AndroidViewModel(application) {
     private val repository: PhrasepadRepository = PhrasepadRepository(application)
-    var phraseList: LiveData<List<Phrase>> = repository.getAllPhrases()
-        private set
+    //private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
-
-    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
-    val sourceLang = sharedPreferences.getString("source_lang", "")
-    val destLang = sharedPreferences.getString("dest_lang", "")
-
-    fun getPhrases(knownLanguage: Language, unknownLanguage: Language): LiveData<List<Phrase>> {
-        var changed = false
-
-        if (sourceLang != null) {
-            Log.d("Preferences", sourceLang)
-        }
-        if (destLang != null) {
-            Log.d("Preferences", destLang)
-        }
-
-        phraseList = repository.getAllPhrases()
-
-        return phraseList
+    fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> {
+        //Log.d("Preferences", sourceLang.locale.toLanguageTag())
+        //Log.d("Preferences", destLang.locale.toLanguageTag())
+        Log.d("getPhrases", repository.getPhrases(sourceLang, destLang).toString())
+        Log.d("getPhrases", sourceLang)
+        Log.d("getPhrases", destLang)
+        return repository.getPhrases(sourceLang, destLang)
     }
 
     override fun onCleared() {

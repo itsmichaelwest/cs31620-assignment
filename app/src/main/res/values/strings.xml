@@ -5,17 +5,20 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="languages_header">Languages</string>
+    <string name="display_header">Display</string>
+    <string name="data_manage_header">Data Mangement</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <!-- Languages Preferences -->
+    <string name="source_language">Source language</string>
+    <string name="destination_language">Destination language</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- Display Preferences -->
+    <string name="always_english">Always use English</string>
+    <string name="always_english_summary">Always use English for language names</string>
+    <string name="theme">App theme</string>
+
+    <!-- Data Management Preferences -->
+    <string name="clear_all">Reset phrase book</string>
+    <string name="clear_all_summary">This will clear your phrase book. All phrases will be deleted!</string>
 </resources>

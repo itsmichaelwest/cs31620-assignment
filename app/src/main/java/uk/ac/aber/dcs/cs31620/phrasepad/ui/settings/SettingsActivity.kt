@@ -1,13 +1,19 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.settings
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import kotlinx.android.synthetic.main.settings_activity.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.SettingsActivityBinding
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var binding: SettingsActivityBinding
 
@@ -25,6 +31,27 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        when (key){
+            "theme" -> {
+                when(sharedPreferences.getString("theme", "0")) {
+                    "0" -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    }
+                    "1" -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                    "2" -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+                }
+            }
+        }
     }
 
     // Go back to main activity when back button in toolbar is pressed

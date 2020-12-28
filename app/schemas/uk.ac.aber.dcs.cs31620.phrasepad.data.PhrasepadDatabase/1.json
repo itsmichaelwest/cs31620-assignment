@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "49862f218d9869aa165694d39b980509",
+    "identityHash": "da7d93952003052ff3cd620298f2b199",
     "entities": [
       {
         "tableName": "phrases",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `knownLanguage` TEXT NOT NULL, `unknownLanguage` TEXT NOT NULL, `knownPhrase` TEXT NOT NULL, `unknownPhrase` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sourceLang` TEXT, `destLang` TEXT, `sourcePhrase` TEXT NOT NULL, `destPhrase` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,26 +15,26 @@
             "notNull": true
           },
           {
-            "fieldPath": "knownLanguage",
-            "columnName": "knownLanguage",
+            "fieldPath": "sourceLang",
+            "columnName": "sourceLang",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "destLang",
+            "columnName": "destLang",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sourcePhrase",
+            "columnName": "sourcePhrase",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "unknownLanguage",
-            "columnName": "unknownLanguage",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "knownPhrase",
-            "columnName": "knownPhrase",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "unknownPhrase",
-            "columnName": "unknownPhrase",
+            "fieldPath": "destPhrase",
+            "columnName": "destPhrase",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -52,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '49862f218d9869aa165694d39b980509')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da7d93952003052ff3cd620298f2b199')"
     ]
   }
 }

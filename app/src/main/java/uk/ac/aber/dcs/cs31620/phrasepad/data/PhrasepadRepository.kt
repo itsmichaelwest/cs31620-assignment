@@ -25,7 +25,5 @@ class PhrasepadRepository(application: Application) {
 
     fun getAllPhrases() = phrasepadDao.getAllPhrases()
 
-    fun getPhrases(knownLanguage: Language, unknownLanguage: Language) {
-        phrasepadDao.getAllLangaugePhrases(knownLanguage, unknownLanguage)
-    }
+    fun getPhrases(sourceLang: String, destLang: String) = phrasepadDao.getPhrases(sourceLang, destLang)
 }

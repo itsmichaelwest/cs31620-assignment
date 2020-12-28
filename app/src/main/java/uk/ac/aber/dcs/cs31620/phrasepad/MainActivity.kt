@@ -1,23 +1,43 @@
 package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.AddPhraseFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var themeListener: SharedPreferences.OnSharedPreferenceChangeListener
+
+    override fun onStart() {
+        super.onStart()
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        when(sharedPreferences.getString("theme", "0")) {
+            "0" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+            "1" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            "2" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +58,16 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        // Set flag based on dest lang preference
+        /*
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val destLangCode = sharedPreferences.getString("dest_lang", "")
+        Log.d("MainActivity", destLangCode.toString())
+        val flagResId = resources.getIdentifier(destLangCode.toString(), "drawable", packageName)
+        val flagResImage = ResourcesCompat.getDrawable(resources, flagResId, null)
+        toolbar.lang_flag.setImageDrawable(flagResImage)
+         */
 
         setSupportActionBar(toolbar)
 

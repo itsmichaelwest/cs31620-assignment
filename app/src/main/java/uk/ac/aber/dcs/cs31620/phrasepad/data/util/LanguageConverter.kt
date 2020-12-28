@@ -14,7 +14,7 @@ object LanguageConverter {
     fun toLanguage(language: String) = convertToLanguage(language)
 
     fun convertToLanguage(value: String): Language {
-        val returnLang = Language(value.split("\\s".toRegex())[0], Locale(value.split("\\s".toRegex())[1]))
+        val returnLang = Language(Locale(value))
         return returnLang
     }
 }

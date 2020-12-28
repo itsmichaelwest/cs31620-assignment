@@ -1,30 +1,49 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Languages">
+    <PreferenceCategory app:title="@string/languages_header">
 
         <ListPreference
             android:entries="@array/languages"
-            android:entryValues="@array/languages"
+            android:entryValues="@array/languages_codes"
             android:key="source_lang"
-            android:title="Source Language"
+            android:title="@string/source_language"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:entries="@array/languages"
-            android:entryValues="@array/languages"
+            android:entryValues="@array/languages_codes"
             android:key="dest_lang"
-            android:title="Destination Language"
+            android:title="@string/destination_language"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Data management">
+    <PreferenceCategory app:title="@string/display_header">
+
+        <ListPreference
+            android:entries="@array/themes"
+            android:entryValues="@array/themes_values"
+            android:key="theme"
+            android:defaultValue="0"
+            app:title="@string/theme"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreference
+            android:key="always_english"
+            android:title="@string/always_english"
+            android:summary="@string/always_english_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/data_manage_header">
 
         <Preference
-            android:title="Clear all data"
+            android:id="@+id/clear_app_data"
             android:key="clear_all"
-            android:summary="Clear all app data" />
+            android:summary="@string/clear_all_summary"
+            android:title="@string/clear_all">
+        </Preference>
 
     </PreferenceCategory>
 

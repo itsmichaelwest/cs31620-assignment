@@ -69,7 +69,7 @@
         android:inputType="textPersonName"
         android:hint="Destination Language"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextOriginLang"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch"
         app:startIconDrawable="@drawable/ic__f1ee_1f1f9"
         style="@style/OutlinedBox">
 

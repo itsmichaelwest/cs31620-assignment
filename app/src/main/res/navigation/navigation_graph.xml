@@ -10,4 +10,13 @@
         android:name="uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhrasesFragment"
         android:label="fragment_phrases"
         tools:layout="@layout/fragment_phrases" />
+    <fragment
+        android:id="@+id/bnav_search"
+        android:name="uk.ac.aber.dcs.cs31620.phrasepad.ui.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

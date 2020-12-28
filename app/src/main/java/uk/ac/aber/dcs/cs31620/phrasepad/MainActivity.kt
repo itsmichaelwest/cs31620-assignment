@@ -1,14 +1,19 @@
 package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
+import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,20 +24,32 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar = binding.toolbar.toolbar
+        val toolbarHeroBinding = ToolbarHeroBinding.inflate(layoutInflater)
+        val toolbar = toolbarHeroBinding.toolbar
+        toolbar.inflateMenu(R.menu.toolbar)
 
-        val mOnNavigationItemSelectedListener = Toolbar.OnMenuItemClickListener {item ->
-            when (item.itemId) {
+        binding.toolbar.toolbar.setOnMenuItemClickListener{ menuItem ->
+            when (menuItem.itemId) {
                 R.id.tb_settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
                     startActivity(intent)
+                    true
                 }
+                else -> false
             }
-            false
         }
 
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        val bottomNavigation = binding.bottomNavigation
+        val bottomNavigationController = findNavController(R.id.navigation_fragment_host)
+
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.bnav_phrases, R.id.bnav_search, R.id.bnav_quiz
+        ))
+
+        setupActionBarWithNavController(bottomNavigationController, appBarConfiguration)
+        bottomNavigation.setupWithNavController(bottomNavigationController)
     }
 
     fun showAddPhraseFragment(view: View) {

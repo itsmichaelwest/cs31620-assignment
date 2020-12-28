@@ -13,14 +13,27 @@
 
     </style>
 
+    <!-- Bottom Sheet -->
     <style name="PhrasePad.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/Animation.MaterialComponents.BottomSheetDialog</item>
-        <item name="bottomSheetStyle">@style/Widget.MaterialComponents.BottomSheet.Modal</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="behavior_skipCollapsed">true</item>
+        <item name="bottomSheetStyle">@style/PhrasePad.BottomSheetDialog.Sheet</item>
+    </style>
+
+    <style name="PhrasePad.BottomSheetDialog.Sheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/PhrasePad.BottomSheetDialog.Sheet.Overlay</item>
+    </style>
+
+    <style name="PhrasePad.BottomSheetDialog.Sheet.Overlay">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="PhrasePad.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">

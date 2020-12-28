@@ -1,6 +1,7 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
 import android.content.SharedPreferences
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment

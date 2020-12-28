@@ -1,4 +1,4 @@
-package uk.ac.aber.dcs.cs31620.phrasepad.ui
+package uk.ac.aber.dcs.cs31620.phrasepad.ui.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_phrases" />
     <fragment
         android:id="@+id/bnav_search"
-        android:name="uk.ac.aber.dcs.cs31620.phrasepad.ui.SearchFragment"
+        android:name="uk.ac.aber.dcs.cs31620.phrasepad.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment

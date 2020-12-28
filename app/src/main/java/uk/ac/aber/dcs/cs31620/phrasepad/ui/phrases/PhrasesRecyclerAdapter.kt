@@ -46,8 +46,11 @@ class PhrasesRecyclerAdapter(private val context: Context?) : RecyclerView.Adapt
     }
 
     fun changeData(data: MutableList<Phrase>) {
-
         this.data = data
         this.notifyDataSetChanged()
+    }
+
+    fun getPhraseAt(id: Int): Phrase {
+        return data[id]
     }
 }

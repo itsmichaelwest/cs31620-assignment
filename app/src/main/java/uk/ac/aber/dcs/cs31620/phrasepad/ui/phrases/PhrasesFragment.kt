@@ -12,13 +12,12 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.phrase_list_item.view.*
+import com.google.android.material.snackbar.Snackbar
 import uk.ac.aber.dcs.cs31620.phrasepad.R
-import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
@@ -74,5 +73,37 @@ class PhrasesFragment : Fragment() {
                 phraseRecyclerAdapter.changeData(phrases.toMutableList())
             }
         }
+
+        val itemTouchHelperCallback =
+            object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                    override fun onMove(
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder,
+                        target: RecyclerView.ViewHolder
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        val position = viewHolder.layoutPosition
+                        val phrase: Phrase = phraseRecyclerAdapter.getPhraseAt(position)
+                        phraseViewModel.delete(phrase)
+
+                        Snackbar.make(
+                            viewHolder.itemView,
+                            "Deleted",
+                            Snackbar.LENGTH_LONG
+                        ).apply {
+                            setAction("Undo") {
+                                phraseViewModel.add(phrase)
+                                phrasesList.scrollToPosition(position)
+                            }
+                        }
+                    }
+                }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(phrasesList)
     }
 }

@@ -12,7 +12,6 @@
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
-        <activity android:name=".OnboardingActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing">

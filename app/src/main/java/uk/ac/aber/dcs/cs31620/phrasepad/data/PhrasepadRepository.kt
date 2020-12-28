@@ -26,4 +26,6 @@ class PhrasepadRepository(application: Application) {
     fun getAllPhrases() = phrasepadDao.getAllPhrases()
 
     fun getPhrases(sourceLang: String, destLang: String) = phrasepadDao.getPhrases(sourceLang, destLang)
+
+    fun deletePhrase(phrase: Phrase) = phrasepadDao.deletePhrase(phrase)
 }

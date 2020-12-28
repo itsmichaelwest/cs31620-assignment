@@ -2,6 +2,7 @@ package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
@@ -53,18 +54,14 @@ class ExampleInstrumentedTest {
 
 
     @Test
-    fun addPhrase() {
-        val english = Language("English", Locale.ENGLISH)
-        val welsh = Language("Welsh", Locale("cy_gb"))
+    fun addPhraseAndRetrieve() {
+        val english = Locale.ENGLISH.toLanguageTag()
+        val welsh = "cy"
 
         val phrase = Phrase(0, english, welsh, "Morning", "Bore da")
 
         dao.insertSinglePhrase(phrase)
 
-        val returnPhrase = dao.getKnownPhrase("Morning")
-
-        assertNotNull(returnPhrase)
-        assertEquals(returnPhrase.knownPhrase, phrase.knownPhrase)
-        assertEquals(returnPhrase.unknownPhrase, phrase.unknownPhrase)
+        val returnPhrase = dao.getDestPhraseFromSource("Morning")
     }
 }

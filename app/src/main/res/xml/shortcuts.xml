@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="compose"
+        android:enabled="true"
+        android:icon="@drawable/ic_fluent_add_24_regular"
+        android:shortcutShortLabel="@string/add_phrase">
+        <intent
+            android:action="ADDPHRASE"
+            android:targetPackage="uk.ac.aber.dcs.cs31620.phrasepad"
+            android:targetClass="uk.ac.aber.dcs.cs31620.phrasepad.MainActivity" />
+    </shortcut>
+</shortcuts>

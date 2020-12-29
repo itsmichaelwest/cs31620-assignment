@@ -1,17 +1,27 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.settings
 
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
+import android.util.TypedValue
+import android.view.WindowInsetsController.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.get
-import androidx.navigation.findNavController
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.settings_activity.*
+import kotlinx.android.synthetic.main.settings_activity.toolbar
+import kotlinx.android.synthetic.main.toolbar_hero.*
+import kotlinx.android.synthetic.main.toolbar_hero.view.*
+import kotlinx.android.synthetic.main.toolbar_hero.view.toolbar
+import kotlinx.android.synthetic.main.toolbar_hero.view.toolbar_title
+import uk.ac.aber.dcs.cs31620.phrasepad.MainActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.SettingsActivityBinding
+import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
+import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -32,7 +42,25 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_fluent_arrow_left_24_regular)
+        // Set the navigation bar color/background based on the system theme. Requires Android 11.
+        @RequiresApi(api = Build.VERSION_CODES.R)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val a = TypedValue()
+            val windowBg = theme.resolveAttribute(android.R.attr.windowBackground, a, true)
+            if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+                window.navigationBarColor = a.data
+            }
+
+            val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            when(currentNightMode) {
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    window.decorView.windowInsetsController?.setSystemBarsAppearance(
+                        APPEARANCE_LIGHT_NAVIGATION_BARS,
+                        APPEARANCE_LIGHT_NAVIGATION_BARS
+                    )
+                }
+            }
+        }
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
@@ -41,7 +69,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key){
             "theme" -> {
-                when(sharedPreferences.getString("theme", "0")) {
+                when (sharedPreferences.getString("theme", "0")) {
                     "0" -> {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                     }

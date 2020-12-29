@@ -10,7 +10,7 @@
     style="@style/PhrasePad.Toolbar">
 
     <ImageView
-        android:id="@+id/lang_flag"
+        android:id="@+id/langFlag"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="12dp"/>

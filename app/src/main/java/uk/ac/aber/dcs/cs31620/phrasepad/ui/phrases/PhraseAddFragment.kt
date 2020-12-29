@@ -1,5 +1,7 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
+import android.app.Dialog
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -7,9 +9,17 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.preference.PreferenceManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_add_phrase.*
@@ -19,6 +29,7 @@ import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentAddPhraseBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.FlagHelper
 import java.util.*
 
 class PhraseAddFragment: BottomSheetDialogFragment() {
@@ -49,6 +60,12 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
             binding.editTextDestLang.hint = destLang?.localeNameEnglish
         }
 
+        val sourceLangFlag = container?.findViewById<ImageView>(R.id.sourceLangFlag)
+        sourceLangFlag?.setImageResource(FlagHelper.get(sourceLang!!.localeCode).flag)
+
+        val destLangFlag = container?.findViewById<ImageView>(R.id.destLangFlag)
+        destLangFlag?.setImageResource(FlagHelper.get(destLang!!.localeCode).flag)
+
         binding.saveButton.setOnClickListener { view ->
             if (textInputOriginLang.text.isNullOrEmpty()) {
                 textInputOriginLang.error = "Please enter a phrase"
@@ -63,13 +80,32 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
             }
         }
 
+        /*
         binding.dismissButton.setOnClickListener { view ->
             dismiss()
         }
 
+         */
+
         binding.editTextOriginLang.requestFocus()
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (dialog != null) {
+            val bottomSheet = dialog!!.findViewById<ConstraintLayout>(R.id.add_phrase_sheet)
+            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        }
+        view?.post {
+            val parent = requireView().parent as View
+            val params = parent.layoutParams as CoordinatorLayout.LayoutParams
+            val behavior = params.behavior
+
+            val bottomSheetBehavior = behavior as BottomSheetBehavior
+            bottomSheetBehavior.setPeekHeight(requireView().measuredHeight)
+        }
     }
 
     private fun savePhrase(origin: String, destination: String): Boolean {

@@ -11,17 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
-import kotlinx.android.synthetic.main.settings_activity.*
-import kotlinx.android.synthetic.main.settings_activity.toolbar
-import kotlinx.android.synthetic.main.toolbar_hero.*
-import kotlinx.android.synthetic.main.toolbar_hero.view.*
-import kotlinx.android.synthetic.main.toolbar_hero.view.toolbar
-import kotlinx.android.synthetic.main.toolbar_hero.view.toolbar_title
-import uk.ac.aber.dcs.cs31620.phrasepad.MainActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.SettingsActivityBinding
-import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 

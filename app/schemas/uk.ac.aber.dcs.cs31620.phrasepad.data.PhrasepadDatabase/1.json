@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "da7d93952003052ff3cd620298f2b199",
+    "identityHash": "b70f091191a8b1b360e9cd69551b9fe9",
     "entities": [
       {
         "tableName": "phrases",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sourceLang` TEXT, `destLang` TEXT, `sourcePhrase` TEXT NOT NULL, `destPhrase` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sourceLang` TEXT NOT NULL, `destLang` TEXT NOT NULL, `sourcePhrase` TEXT NOT NULL, `destPhrase` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,13 +18,13 @@
             "fieldPath": "sourceLang",
             "columnName": "sourceLang",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "destLang",
             "columnName": "destLang",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "sourcePhrase",
@@ -52,7 +52,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'da7d93952003052ff3cd620298f2b199')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b70f091191a8b1b360e9cd69551b9fe9')"
     ]
   }
 }

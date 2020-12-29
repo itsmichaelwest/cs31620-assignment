@@ -5,13 +5,13 @@
     <item
         android:id="@+id/bnav_phrases"
         android:icon="@drawable/bnav_phrases_selector"
-        android:title="Phrases" />
+        android:title="@string/phrases" />
     <item
         android:id="@+id/bnav_search"
         android:icon="@drawable/bnav_search_selector"
-        android:title="Search" />
+        android:title="@string/search" />
     <item
         android:id="@+id/bnav_quiz"
         android:icon="@drawable/bnav_quiz_selector"
-        android:title="Quizes" />
+        android:title="@string/quiz" />
 </menu>

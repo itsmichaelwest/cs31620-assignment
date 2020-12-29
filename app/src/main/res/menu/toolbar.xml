@@ -5,5 +5,5 @@
     <item
         android:id="@+id/tb_settings"
         android:icon="@drawable/ic_fluent_settings_24_regular"
-        android:title="Settings" />
+        android:title="@string/title_activity_settings" />
 </menu>

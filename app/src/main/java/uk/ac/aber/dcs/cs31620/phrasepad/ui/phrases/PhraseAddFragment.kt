@@ -1,35 +1,22 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
-import android.app.Dialog
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.DialogFragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_add_phrase.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentAddPhraseBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
-import uk.ac.aber.dcs.cs31620.phrasepad.ui.FlagHelper
 import java.util.*
 
 class PhraseAddFragment: BottomSheetDialogFragment() {
@@ -49,22 +36,23 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
     ): View? {
         binding = FragmentAddPhraseBinding.inflate(inflater, container, false)
 
-        val sourceLang = sharedPreferences.getString("source_lang", "en")?.let { Locales.get(it) }
-        val destLang = sharedPreferences.getString("dest_lang", "cy")?.let { Locales.get(it) }
+        // Get source/destination languages from preferences
+        val sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
+        val destinationLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!))
 
-        if (!sharedPreferences.getBoolean("always_english", false)) {
-            binding.editTextOriginLang.hint = sourceLang?.localeName
-            binding.editTextDestLang.hint = destLang?.localeName
+        // Use device locale specific names if requested
+        val alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
+        if (alwaysDevLang) {
+            binding.editTextOriginLang.hint = sourceLanguage.getDeviceLangName()
+            binding.editTextDestLang.hint = destinationLanguage.getDeviceLangName()
         } else {
-            binding.editTextOriginLang.hint = sourceLang?.localeNameEnglish
-            binding.editTextDestLang.hint = destLang?.localeNameEnglish
+            binding.editTextOriginLang.hint = sourceLanguage.getNativeName()
+            binding.editTextDestLang.hint = destinationLanguage.getNativeName()
         }
 
-        val sourceLangFlag = container?.findViewById<ImageView>(R.id.sourceLangFlag)
-        sourceLangFlag?.setImageResource(FlagHelper.get(sourceLang!!.localeCode).flag)
-
-        val destLangFlag = container?.findViewById<ImageView>(R.id.destLangFlag)
-        destLangFlag?.setImageResource(FlagHelper.get(destLang!!.localeCode).flag)
+        // Set language flags
+        binding.addPhraseSheet.findViewById<ImageView>(R.id.sourceLangFlag).setImageDrawable(sourceLanguage.getFlag(requireContext()))
+        binding.addPhraseSheet.findViewById<ImageView>(R.id.destLangFlag).setImageDrawable(destinationLanguage.getFlag(requireContext()))
 
         binding.saveButton.setOnClickListener { view ->
             if (textInputOriginLang.text.isNullOrEmpty()) {
@@ -116,8 +104,8 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
 
             val phrase = Phrase(
                 0,
-                sharedPreferences.getString("source_lang", "en"),
-                sharedPreferences.getString("dest_lang", "cy"),
+                Language(Locale(sharedPreferences.getString("source_lang", "en"))),
+                Language(Locale(sharedPreferences.getString("dest_lang", "cy"))),
                 origin,
                 destination
             )

@@ -8,7 +8,7 @@ import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 class PhraseViewModel(application: Application): AndroidViewModel(application) {
     private val repository: PhrasepadRepository = PhrasepadRepository(application)
 
-    fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> {
+    fun getPhrases(sourceLang: Language, destLang: Language): LiveData<List<Phrase>> {
         return repository.getPhrases(sourceLang, destLang)
     }
 

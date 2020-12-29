@@ -1,35 +1,28 @@
 package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import kotlinx.android.synthetic.main.toolbar_hero.*
 import kotlinx.android.synthetic.main.toolbar_hero.view.*
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
-import uk.ac.aber.dcs.cs31620.phrasepad.ui.FlagHelper
+import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhraseAddFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var heroTitleListener: SharedPreferences.OnSharedPreferenceChangeListener
-    public lateinit var layout: CoordinatorLayout
+    private lateinit var heroTitleListener: OnSharedPreferenceChangeListener
 
     override fun onStart() {
         super.onStart()
@@ -46,6 +39,11 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
         }
+
+        // Handle home screen shortcut to Add Phrase
+        if ("ADDPHRASE".equals(intent.action)) {
+            showAddPhraseFragment(findViewById(R.id.layout))
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +51,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up toolbar
         val toolbarHeroBinding = ToolbarHeroBinding.inflate(layoutInflater)
         val toolbar = toolbarHeroBinding.toolbar
         toolbar.inflateMenu(R.menu.toolbar)
+        setSupportActionBar(toolbar)
 
+        // Settings menu listener
         binding.toolbar.toolbar.setOnMenuItemClickListener{ menuItem ->
             when (menuItem.itemId) {
                 R.id.tb_settings -> {
@@ -68,45 +69,45 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Set flag based on dest lang preference
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        // Set flag/language name based on preferences
+        val destinationLanguage = Language(Locale(PreferenceManager.getDefaultSharedPreferences(applicationContext).getString("dest_lang", "en")!!))
+        val alwaysDevLang = PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean("always_dev_lang", false)
+        val langFlag = findViewById<ImageView>(R.id.langFlag) // We need to find the view by id for some reason, binding doesn't work
+        if (alwaysDevLang)
+            binding.toolbar.toolbar.toolbar_title.text = destinationLanguage.getDeviceLangName()
+        else
+            binding.toolbar.toolbar.toolbar_title.text = destinationLanguage.getNativeName()
+        langFlag.setImageDrawable(destinationLanguage.getFlag(applicationContext))
 
+        // Listen to preference changes for the App Bar flag/language name
         heroTitleListener =
             OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 if (key == "dest_lang") {
-                    binding.toolbar.toolbar.toolbar_title.text = Locales.get(sharedPreferences.getString("dest_lang", "cy").toString()).localeName
+                    val alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
+                    if (alwaysDevLang)
+                        binding.toolbar.toolbar.toolbar_title.text = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getDeviceLangName()
+                    else
+                        binding.toolbar.toolbar.toolbar_title.text = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getNativeName()
+                    langFlag.setImageDrawable(Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getFlag(applicationContext))
+                }
+                if (key == "always_dev_lang") {
+                    val alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
+                    if (alwaysDevLang) {
+                        binding.toolbar.toolbar.toolbar_title.text = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getDeviceLangName()
+                    } else {
+                        binding.toolbar.toolbar.toolbar_title.text = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getNativeName()
+                    }
                 }
             }
+        PreferenceManager.getDefaultSharedPreferences(applicationContext).registerOnSharedPreferenceChangeListener(heroTitleListener)
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(heroTitleListener);
-        val destLangCode = sharedPreferences.getString("dest_lang", "cy")
-
-        val langFlag = findViewById<ImageView>(R.id.langFlag)
-        langFlag.setImageResource(FlagHelper.get(destLangCode!!).flag)
-
-        setSupportActionBar(toolbar)
-
-        binding.toolbar.toolbar.toolbar_title.text = Locales.get(destLangCode.toString()).localeName
-
+        // Set up bottom navigation
         val bottomNavigation = binding.bottomNavigation
         val bottomNavigationController = findNavController(R.id.navigation_fragment_host)
-
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.bnav_phrases, R.id.bnav_search, R.id.bnav_quiz
-            )
-        )
-
-        setupActionBarWithNavController(bottomNavigationController, appBarConfiguration)
         bottomNavigation.setupWithNavController(bottomNavigationController)
-
-        layout = findViewById(R.id.layout)
-
-        if ("ADDPHRASE".equals(intent.action)) {
-            showAddPhraseFragment(findViewById(R.id.layout))
-        }
     }
 
+    // Show the Add Phrase fragment
     fun showAddPhraseFragment(view: View) {
         val fragment = PhraseAddFragment()
         fragment.show(supportFragmentManager, "add_phrase_fragment")

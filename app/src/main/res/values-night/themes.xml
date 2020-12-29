@@ -11,11 +11,11 @@
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status bar -->
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
         <!-- Navigation bar -->
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
 
         <item name="toolbarStyle">@style/PhrasePad.Toolbar</item>

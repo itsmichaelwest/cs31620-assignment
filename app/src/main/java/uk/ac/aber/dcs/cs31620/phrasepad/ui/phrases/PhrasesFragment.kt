@@ -1,7 +1,6 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
 import android.content.SharedPreferences
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,11 +16,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
-import uk.ac.aber.dcs.cs31620.phrasepad.MainActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
+import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
+import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleFlagHelper
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
@@ -55,15 +53,15 @@ class PhrasesFragment : Fragment() {
         phrasesList.adapter = phraseRecyclerAdapter
         phrasesList.layoutManager = LinearLayoutManager(activity)
 
-        val sourceLang = sharedPreferences.getString("source_lang", "en")?.let { Locales.get(it) }
-        val destLang = sharedPreferences.getString("dest_lang", "cy")?.let { Locales.get(it) }
+        val sourceLang = sharedPreferences.getString("source_lang", "en")?.let { LocaleFlagHelper.get(it) }
+        val destLang = sharedPreferences.getString("dest_lang", "cy")?.let { LocaleFlagHelper.get(it) }
 
         phraseRecyclerAdapter.clickListener = View.OnClickListener { view ->
             val sourceView: TextView = view.findViewById(R.id.source_text)
             Toast.makeText(context, "Phrase ${sourceView.text} clicked", Toast.LENGTH_SHORT).show()
         }
 
-        val phraseList = phraseViewModel.getPhrases(sourceLang!!.localeCode, destLang!!.localeCode)
+        val phraseList = phraseViewModel.getPhrases(Language(Locale(sourceLang!!.localeCode)), Language(Locale(destLang!!.localeCode)))
 
         if (oldPhraseList != phraseList) {
             oldPhraseList?.removeObservers(viewLifecycleOwner)

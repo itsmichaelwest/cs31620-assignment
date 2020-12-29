@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhrasePad</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="add_phrase">Phrase Hinzufügen</string>
+    <string name="add_phrase_title">Neue Phrase Hinzufügen</string>
+    <string name="save">Sparen</string>
+    <string name="languages_header">Sprachen</string>
+    <string name="display_header">Anzeige</string>
+    <string name="data_manage_header">Datenmanagement</string>
+    <string name="source_language">Ausgangssprache</string>
+    <string name="destination_language">Zielsprache</string>
+    <string name="always_dev_lang">Verwenden Sie immer die Gerätesprache</string>
+    <string name="always_dev_lang_summary">Verwenden Sie Ihre Muttersprache für alle Sprachnamen anstelle ihrer Mutternamen</string>
+    <string name="theme">Thema</string>
+    <string name="clear_all">Sprachführer zurücksetzen</string>
+    <string name="clear_all_summary">Dadurch wird Ihr Sprachführer gelöscht. Alle Sätze werden gelöscht!</string>
+    <string name="phrases">Sätze</string>
+    <string name="search">Suche</string>
+    <string name="quiz">Quiz</string>
+    <string name="theme_sys_default">Systemfehler</string>
+    <string name="theme_light">Licht</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="notifications_header">Lernbenachrichtigungen</string>
+    <string name="notifications">Senden Sie tägliche Quizbenachrichtigungen</string>
+    <string name="notifications_summary">Erinnern Sie Sie daran, jeden Tag mittags ein Quiz zu machen</string>
+    <string name="hello_blank_fragment">Hallo leeres Fragment</string>
+</resources>

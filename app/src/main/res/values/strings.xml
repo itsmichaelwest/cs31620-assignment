@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhrasePad</string>
+    <string name="app_name" translatable="false">PhrasePad</string>
     <string name="phrases">Phrases</string>
     <string name="search">Search</string>
     <string name="quiz">Quizzes</string>
@@ -12,11 +12,15 @@
     <string name="languages_header">Languages</string>
     <string name="notifications_header">Learning Notifications</string>
     <string name="display_header">Display</string>
-    <string name="data_manage_header">Data Mangement</string>
+    <string name="data_manage_header">Data Management</string>
 
     <!-- Languages Preferences -->
     <string name="source_language">Source language</string>
     <string name="destination_language">Destination language</string>
+    <string name="language_changed_header">Language pair changed</string>
+    <string name="language_changed_message">You can save the phrases in your PhraseBook for later, just reselect the language pair. Or you can clear your PhraseBook and start again.</string>
+    <string name="language_changed_delete">Delete</string>
+    <string name="language_changed_cleared">PhraseBook cleared!</string>
 
     <!-- Notifications Preferences -->
     <string name="notifications">Send daily quiz notifications</string>
@@ -31,8 +35,8 @@
     <string name="theme_dark">Dark</string>
 
     <!-- Data Management Preferences -->
-    <string name="clear_all">Reset phrase book</string>
-    <string name="clear_all_summary">This will clear your phrase book. All phrases will be deleted!</string>
+    <string name="clear_all">Reset PhraseBook</string>
+    <string name="clear_all_summary">This will clear all phrase books. All saved phrases will be deleted!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

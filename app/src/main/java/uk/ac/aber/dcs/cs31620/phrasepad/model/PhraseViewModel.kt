@@ -20,6 +20,10 @@ class PhraseViewModel(application: Application): AndroidViewModel(application) {
         repository.deletePhrase(phrase)
     }
 
+    fun deleteAll() = repository.deleteAll()
+
+    fun deleteSpecificLanguagePair(sourceLang: Language, destLang: Language) = repository.deleteSpecificLanguagePair(sourceLang, destLang)
+
     override fun onCleared() {
         super.onCleared()
     }

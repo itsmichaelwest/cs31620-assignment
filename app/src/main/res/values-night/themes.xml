@@ -16,7 +16,6 @@
 
         <!-- Navigation bar -->
         <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
 
         <item name="toolbarStyle">@style/PhrasePad.Toolbar</item>
         <item name="textInputStyle">@style/PhrasePad.TextInputLayout</item>

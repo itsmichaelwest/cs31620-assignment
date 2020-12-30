@@ -20,6 +20,9 @@ interface PhraseDao {
     @Query("DELETE FROM phrases")
     fun deleteAll()
 
+    @Query("DELETE FROM phrases WHERE sourceLang = :sourceLang AND destLang = :destLang")
+    fun deleteSpecificLanguagePair(sourceLang: Language, destLang: Language)
+
     @Query("SELECT * FROM phrases")
     fun getAllPhrases(): LiveData<List<Phrase>>
 

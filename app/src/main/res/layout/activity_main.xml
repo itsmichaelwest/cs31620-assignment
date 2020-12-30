@@ -51,6 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:menu="@menu/bottom_navigation"
-        style="@style/PhrasePad.BottomNavigation"/>
+        style="@style/PhrasePad.BottomNavigation" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

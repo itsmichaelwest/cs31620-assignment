@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phrases">Frasi</string>
+    <string name="search">Ricerca</string>
+    <string name="quiz">Quiz</string>
+    <string name="title_activity_settings">Impostazioni</string>
+    <string name="add_phrase">Aggiungi Frase</string>
+    <string name="add_phrase_title">Aggiungi nuova Frase</string>
+    <string name="save">Salva</string>
+    <string name="languages_header">Le lingue</string>
+    <string name="display_header">Schermo</string>
+    <string name="data_manage_header">Gestione dei dati</string>
+    <string name="source_language">Linguaggio del codice</string>
+    <string name="destination_language">Lingua di destinazione</string>
+    <string name="always_dev_lang">Usa sempre la lingua del dispositivo</string>
+    <string name="always_dev_lang_summary">Usa la lingua del tuo dispositivo per tutti i nomi di lingua, invece dei nomi nativi</string>
+    <string name="theme">Tema dell\'app</string>
+    <string name="clear_all">Reimposta PhraseBook</string>
+    <string name="clear_all_summary">Questo cancellerà il tuo frasario. Tutte le frasi verranno eliminate!</string>
+    <string name="hello_blank_fragment">Ciao frammento vuoto</string>
+    <string name="notifications_header">Notifiche di apprendimento</string>
+    <string name="notifications">Invia notifiche di quiz giornaliere</string>
+    <string name="notifications_summary">Ricordati di fare un quiz ogni giorno a mezzogiorno</string>
+    <string name="theme_sys_default">Default del sistema</string>
+    <string name="theme_light">Chiaro</string>
+    <string name="theme_dark">Scuro</string>
+    <string name="language_changed_header">La coppia linguistica è cambiata</string>
+    <string name="language_changed_message">Puoi salvare le frasi nel tuo PhraseBook per dopo, basta riselezionare la coppia di lingue. Oppure puoi cancellare il tuo PhraseBook e ricominciare.</string>
+    <string name="language_changed_delete">Elimina</string>
+    <string name="language_changed_cleared">PhraseBook cancellato!</string>
+</resources>

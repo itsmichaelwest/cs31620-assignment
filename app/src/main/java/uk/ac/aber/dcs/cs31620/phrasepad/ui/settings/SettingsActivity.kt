@@ -1,22 +1,35 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.settings
 
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.WindowInsetsController.*
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.SettingsActivityBinding
+import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
+import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseDao
+import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
+import java.util.*
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var binding: SettingsActivityBinding
+    private val phraseViewModel: PhraseViewModel by viewModels()
+    private lateinit var sourceLanguage: Language
+    private lateinit var destLanguage: Language
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +68,9 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
+        sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
+        destLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!))
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
@@ -70,6 +86,33 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                     "2" -> {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     }
+                }
+            }
+            "source_lang", "dest_lang" -> {
+                if (!isFinishing) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(R.string.language_changed_header)
+                        .setMessage(R.string.language_changed_message)
+                        .setNegativeButton(R.string.language_changed_delete) { dialog, _ ->
+                            phraseViewModel.deleteSpecificLanguagePair(sourceLanguage, destLanguage)
+                            sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
+                            destLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!))
+                            Toast.makeText(this, R.string.language_changed_cleared, Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                            finish()
+                        }
+                        .setPositiveButton(R.string.save) { dialog, _ ->
+                            dialog.dismiss()
+                            finish()
+                        }
+                    builder.create()
+                    if (!isFinishing) {
+                        builder.show()
+                    } else {
+                        Log.d("SettingsActivity", "Another crash point...")
+                    }
+                } else {
+                    Log.d("SettingsActivity", "Not finished, so we might crash here!")
                 }
             }
         }

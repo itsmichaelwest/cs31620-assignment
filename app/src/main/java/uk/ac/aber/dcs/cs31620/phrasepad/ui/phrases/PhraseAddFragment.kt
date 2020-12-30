@@ -53,7 +53,7 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
         binding.addPhraseSheet.findViewById<ImageView>(R.id.sourceLangFlag).setImageDrawable(sourceLanguage.getFlag(requireContext()))
         binding.addPhraseSheet.findViewById<ImageView>(R.id.destLangFlag).setImageDrawable(destinationLanguage.getFlag(requireContext()))
 
-        binding.saveButton.setOnClickListener { view ->
+        binding.saveButton.setOnClickListener {
             if (textInputOriginLang.text.isNullOrEmpty()) {
                 editTextOriginLang.error = resources.getString(R.string.phrase_entry_error)
             }

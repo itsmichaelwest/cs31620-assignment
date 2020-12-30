@@ -1,10 +1,8 @@
 package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +10,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import kotlinx.android.synthetic.main.toolbar_hero.*
 import kotlinx.android.synthetic.main.toolbar_hero.view.*
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
@@ -77,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set flag/language name based on preferences
         val destinationLanguage = Language(Locale(PreferenceManager.getDefaultSharedPreferences(applicationContext).getString("dest_lang", "en")!!))
-        val alwaysDevLang = PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean("always_dev_lang", false)
+        var alwaysDevLang = PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean("always_dev_lang", false)
         val langFlag = findViewById<ImageView>(R.id.langFlag) // We need to find the view by id for some reason, binding doesn't work
         if (alwaysDevLang)
             binding.toolbar.toolbar.toolbar_title.text = destinationLanguage.getDeviceLangName()
@@ -89,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         heroTitleListener =
             OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 if (key == "dest_lang") {
-                    val alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
+                    alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
                     if (alwaysDevLang)
                         binding.toolbar.toolbar.toolbar_title.text = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getDeviceLangName()
                     else
@@ -97,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                     langFlag.setImageDrawable(Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getFlag(applicationContext))
                 }
                 if (key == "always_dev_lang") {
-                    val alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
+                    alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
                     if (alwaysDevLang) {
                         binding.toolbar.toolbar.toolbar_title.text = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!)).getDeviceLangName()
                     } else {

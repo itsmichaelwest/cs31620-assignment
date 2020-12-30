@@ -7,18 +7,26 @@
     <string name="add_phrase">Add Phrase</string>
     <string name="add_phrase_title">Add new phrase</string>
     <string name="save">Save</string>
-    <string name="phrase_entry_error">Please enter a phrase</string>
+    <string name="phrase_entry_error">Enter a phrase</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- Set language sheet -->
     <string name="set_language_header">Set language</string>
     <string name="set_language_message">To begin using PhrasePad, set your source and destination languages. You can change these at any time in Settings.</string>
-    <string name="set_language_error">Please select a language</string>
+    <string name="set_language_error">Select a language</string>
+
+    <!-- Quizzes -->
+    <string name="start_quiz">Start quiz</string>
+    <string name="quiz_exit_early">Exit quiz?</string>
+    <string name="quiz_exit_early_message">Your current progress will be lost!</string>
+    <string name="quiz_your_score">Your score is</string>
 
     <!-- Preference Titles -->
     <string name="languages_header">Languages</string>
-    <string name="notifications_header">Learning Notifications</string>
+    <string name="notifications_header">Learning notifications</string>
     <string name="display_header">Display</string>
-    <string name="data_manage_header">Data Management</string>
+    <string name="data_manage_header">Data management</string>
 
     <!-- Languages Preferences -->
     <string name="source_language">Source language</string>

@@ -44,12 +44,12 @@ class PhrasesFragment : Fragment() {
         binding = FragmentPhrasesBinding.inflate(inflater, container, false)
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")))
-        destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")))
+        sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
+        destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")!!))
 
         binding.phrasesListSwipeRefresh.setOnRefreshListener {
-            sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")))
-            destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")))
+            sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
+            destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")!!))
 
             refreshRecyclerViewData(sourceLang, destLang)
 

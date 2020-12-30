@@ -47,15 +47,15 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
         var sourceLang: Language? = null
         var destLang: Language? = null
 
-        (binding.sourceLangDropdown.editText as? AutoCompleteTextView)?.setOnItemClickListener { parent, view, position, id ->
+        (binding.sourceLangDropdown.editText as? AutoCompleteTextView)?.setOnItemClickListener { _, _, position, _ ->
             sourceLang = adapter.getItem(position)
         }
 
-        (binding.destLangDropdown.editText as? AutoCompleteTextView)?.setOnItemClickListener { parent, view, position, id ->
+        (binding.destLangDropdown.editText as? AutoCompleteTextView)?.setOnItemClickListener { _, _, position, _ ->
             destLang = adapter.getItem(position)
         }
 
-        binding.saveButton.setOnClickListener { view ->
+        binding.saveButton.setOnClickListener {
             var isReadyToCommitSource = false
             var isReadyToCommitDest = false
 

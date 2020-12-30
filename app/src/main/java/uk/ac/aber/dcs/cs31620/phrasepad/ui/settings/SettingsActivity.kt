@@ -53,7 +53,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         @RequiresApi(api = Build.VERSION_CODES.R)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val a = TypedValue()
-            val windowBg = theme.resolveAttribute(android.R.attr.windowBackground, a, true)
+            theme.resolveAttribute(android.R.attr.windowBackground, a, true)
             if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
                 window.navigationBarColor = a.data
             }

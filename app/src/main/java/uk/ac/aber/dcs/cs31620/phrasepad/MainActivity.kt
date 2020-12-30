@@ -1,8 +1,10 @@
 package uk.ac.aber.dcs.cs31620.phrasepad
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,7 @@ import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhraseAddFragment
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SetLanguagesFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
 import java.util.*
 
@@ -50,6 +53,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Define language if not set
+        firstRunSetLanguage(findViewById(R.id.layout))
 
         // Set up toolbar
         val toolbarHeroBinding = ToolbarHeroBinding.inflate(layoutInflater)
@@ -111,5 +117,18 @@ class MainActivity : AppCompatActivity() {
     fun showAddPhraseFragment(view: View) {
         val fragment = PhraseAddFragment()
         fragment.show(supportFragmentManager, "add_phrase_fragment")
+    }
+
+    private fun firstRunSetLanguage(view: View) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val sourceLanguage = sharedPreferences.getString("source_lang", null)
+        val destinationLanguage = sharedPreferences.getString("dest_lang", null)
+
+        if (sourceLanguage == null || destinationLanguage == null) {
+            val fragment = SetLanguagesFragment()
+            fragment.isCancelable = false
+            fragment.show(supportFragmentManager, "set_languages_fragment")
+        }
     }
 }

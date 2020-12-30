@@ -29,4 +29,8 @@
     <string name="language_changed_message">Vous pouvez enregistrer les phrases dans votre PhraseBook pour plus tard, il vous suffit de resélectionner la paire de langues. Ou vous pouvez effacer votre PhraseBook et recommencer.</string>
     <string name="language_changed_delete">Effacer</string>
     <string name="language_changed_cleared">PhraseBook effacé!</string>
+    <string name="set_language_message">Pour commencer à utiliser PhrasePad, définissez vos langues source et de destination. Vous pouvez les modifier à tout moment dans les paramètres.</string>
+    <string name="set_language_header">Définir la langue</string>
+    <string name="phrase_entry_error">Veuillez saisir une phrase</string>
+    <string name="set_language_error">Veuillez sélectionner une langue</string>
 </resources>

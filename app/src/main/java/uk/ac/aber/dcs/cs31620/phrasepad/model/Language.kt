@@ -11,7 +11,7 @@ class Language(langLocale: Locale) {
 
     constructor(): this(Locale.ENGLISH)
 
-    override fun toString(): String = "$locale"
+    override fun toString(): String = getNativeName()
 
     // Get the "native" name of the language (i.e. the language in its native script)
     fun getNativeName(): String = locale.getDisplayLanguage(Locale(locale.language)).capitalize(locale)
@@ -21,4 +21,6 @@ class Language(langLocale: Locale) {
 
     // Get the flag for that country, using the LocaleHelper
     fun getFlag(context: Context): Drawable? = ContextCompat.getDrawable(context, LocaleFlagHelper.get(locale.language).flag)
+
+    fun getCode(): String = locale.language
 }

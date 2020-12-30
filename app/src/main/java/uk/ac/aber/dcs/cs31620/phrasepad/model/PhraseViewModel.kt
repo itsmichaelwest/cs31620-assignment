@@ -8,23 +8,13 @@ import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 class PhraseViewModel(application: Application): AndroidViewModel(application) {
     private val repository: PhrasepadRepository = PhrasepadRepository(application)
 
-    fun getPhrases(sourceLang: Language, destLang: Language): LiveData<List<Phrase>> {
-        return repository.getPhrases(sourceLang, destLang)
-    }
+    fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> = repository.getPhrases(sourceLang, destLang)
 
-    fun add(phrase: Phrase) {
-        repository.insert(phrase)
-    }
+    fun add(phrase: Phrase) = repository.insert(phrase)
 
-    fun delete(phrase: Phrase) {
-        repository.deletePhrase(phrase)
-    }
+    fun delete(phrase: Phrase) = repository.deletePhrase(phrase)
 
     fun deleteAll() = repository.deleteAll()
 
-    fun deleteSpecificLanguagePair(sourceLang: Language, destLang: Language) = repository.deleteSpecificLanguagePair(sourceLang, destLang)
-
-    override fun onCleared() {
-        super.onCleared()
-    }
+    fun deleteSpecificLanguagePair(sourceLang: String, destLang: String) = repository.deleteSpecificLanguagePair(sourceLang, destLang)
 }

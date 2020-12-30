@@ -28,4 +28,8 @@
     <string name="language_changed_delete">Löschen</string>
     <string name="language_changed_message">Sie können die Phrasen für später in Ihrem Phrasenbuch speichern. Wählen Sie einfach das Sprachpaar erneut aus. Oder Sie können Ihr Sprachführer löschen und erneut starten.</string>
     <string name="language_changed_header">Sprachpaar geändert</string>
+    <string name="set_language_header">Sprache einstellen</string>
+    <string name="set_language_message">Um PhrasePad zu verwenden, legen Sie Ihre Quell- und Zielsprache fest. Sie können diese jederzeit in den Einstellungen ändern.</string>
+    <string name="phrase_entry_error">Bitte geben Sie eine Phrase ein</string>
+    <string name="set_language_error">Bitte wähle eine Sprache</string>
 </resources>

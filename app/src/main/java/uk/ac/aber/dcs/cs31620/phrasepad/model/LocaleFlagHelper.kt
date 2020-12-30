@@ -12,7 +12,7 @@ enum class LocaleFlagHelper(val localeCode: String, val flag: Int) {
     BN("bn", R.drawable.bn),
     PT("pt", R.drawable.pt),
     RU("ru", R.drawable.ru),
-    JP("jp", R.drawable.jp),
+    JA("ja", R.drawable.jp),
     PA("pa", R.drawable.ind),
     MR("mr", R.drawable.ind),
     TE("te", R.drawable.ind),

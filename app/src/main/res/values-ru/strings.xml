@@ -23,9 +23,13 @@
     <string name="notifications_summary">Напоминать вам делать викторину каждый день в полдень</string>
     <string name="theme_sys_default">Системные установки по умолчанию</string>
     <string name="theme_light">Свет</string>
-    <string name="theme_dark">Тьма</string>
+    <string name="theme_dark">тема</string>
     <string name="language_changed_cleared">Разговорник очищен!</string>
     <string name="language_changed_delete">удалять</string>
     <string name="language_changed_message">Вы можете сохранить фразы в разговорнике на будущее, просто повторно выберите языковую пару. Или вы можете очистить свой разговорник и начать заново.</string>
     <string name="language_changed_header">Языковая пара изменена</string>
+    <string name="set_language_header">Установить язык</string>
+    <string name="set_language_message">Чтобы начать пользоваться PhrasePad, установите исходный и целевой языки. Вы можете изменить их в любое время в настройках.</string>
+    <string name="set_language_error">Пожалуйста, выберите язык</string>
+    <string name="phrase_entry_error">Пожалуйста, введите фразу</string>
 </resources>

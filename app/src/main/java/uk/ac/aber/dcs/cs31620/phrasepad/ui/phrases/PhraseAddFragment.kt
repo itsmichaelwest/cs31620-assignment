@@ -19,14 +19,13 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import java.util.*
 
-class PhraseAddFragment: BottomSheetDialogFragment() {
+class PhraseAddFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddPhraseBinding
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setStyle(DialogFragment.STYLE_NORMAL, R.style.PhrasePad_BottomSheet)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 
@@ -56,24 +55,17 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
 
         binding.saveButton.setOnClickListener { view ->
             if (textInputOriginLang.text.isNullOrEmpty()) {
-                textInputOriginLang.error = "Please enter a phrase"
+                editTextOriginLang.error = resources.getString(R.string.phrase_entry_error)
             }
 
             if (textInputDestLang.text.isNullOrEmpty()) {
-                textInputDestLang.error = "Please enter a phrase"
+                editTextDestLang.error = resources.getString(R.string.phrase_entry_error)
             }
 
-            if (savePhrase(binding.textInputOriginLang.text.toString(), binding.textInputDestLang.text.toString())) {
+            if (savePhrase(binding.textInputOriginLang.text.toString(), binding.textInputDestLang.text.toString(), sourceLanguage, destinationLanguage)) {
                 dismiss()
             }
         }
-
-        /*
-        binding.dismissButton.setOnClickListener { view ->
-            dismiss()
-        }
-
-         */
 
         binding.editTextOriginLang.requestFocus()
 
@@ -96,7 +88,7 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
         }
     }
 
-    private fun savePhrase(origin: String, destination: String): Boolean {
+    private fun savePhrase(origin: String, destination: String, sourceLang: Language, destLang: Language): Boolean {
         if (origin.isEmpty() || destination.isEmpty()) {
             return false
         } else {
@@ -104,8 +96,8 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
 
             val phrase = Phrase(
                 0,
-                Language(Locale(sharedPreferences.getString("source_lang", "en"))),
-                Language(Locale(sharedPreferences.getString("dest_lang", "cy"))),
+                sourceLang.getCode(),
+                destLang.getCode(),
                 origin,
                 destination
             )

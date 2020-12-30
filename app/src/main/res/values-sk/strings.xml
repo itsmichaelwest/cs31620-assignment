@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phrases">Frázy</string>
+    <string name="search">Vyhľadávanie</string>
+    <string name="quiz">Kvízy</string>
+    <string name="title_activity_settings">Nastavenie</string>
+    <string name="add_phrase">Pridajte frázu</string>
+    <string name="add_phrase_title">Pridajte novú frázu</string>
+    <string name="save">Uložiť</string>
+    <string name="languages_header">Jazyky</string>
+    <string name="notifications_header">Učebné oznámenia</string>
+    <string name="display_header">Displej</string>
+    <string name="data_manage_header">Správa údajov</string>
+    <string name="source_language">Zdrojový jazyk</string>
+    <string name="destination_language">Cieľový jazyk</string>
+    <string name="language_changed_header">Jazykový pár sa zmenil</string>
+    <string name="language_changed_message">Frázy si môžete uložiť do svojej knihy frázových kníh na neskôr, stačí znova zvoliť jazykový pár. Prípadne môžete vyčistiť knihu fráz a začať odznova.</string>
+    <string name="language_changed_delete">Odstrániť</string>
+    <string name="language_changed_cleared">PhraseBook vymazaný!</string>
+    <string name="notifications">Posielajte denné oznámenia o kvíze</string>
+    <string name="notifications_summary">Pripomíname, že máte robiť kvíz každý deň napoludnie</string>
+    <string name="always_dev_lang">Vždy používajte jazyk zariadenia</string>
+    <string name="always_dev_lang_summary">Pre všetky názvy jazykov použite ich rodný jazyk, a nie ich pôvodné názvy</string>
+    <string name="theme">Téma aplikácie</string>
+    <string name="theme_sys_default">Predvolený systém</string>
+    <string name="theme_light">Ľahká</string>
+    <string name="theme_dark">Tmavá</string>
+    <string name="clear_all">Obnoviť PhraseBook</string>
+    <string name="clear_all_summary">Vymažú sa všetky frázové knihy. Všetky uložené frázy budú odstránené!</string>
+    <string name="hello_blank_fragment">Dobrý deň, prázdny fragment</string>
+    <string name="set_language_message">Ak chcete začať používať PhrasePad, nastavte si zdrojový a cieľový jazyk. Tieto nastavenia môžete kedykoľvek zmeniť v Nastaveniach.</string>
+    <string name="set_language_header">Nastaviť jazyk</string>
+    <string name="phrase_entry_error">Zadajte frázu</string>
+    <string name="set_language_error">Vyberte jazyk</string>
+</resources>

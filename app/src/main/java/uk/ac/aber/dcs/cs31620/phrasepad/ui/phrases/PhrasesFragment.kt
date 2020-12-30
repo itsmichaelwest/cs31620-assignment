@@ -2,7 +2,6 @@ package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +14,12 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_phrases.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
-import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleFlagHelper
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
@@ -29,50 +29,49 @@ class PhrasesFragment : Fragment() {
     private var oldPhraseList: LiveData<List<Phrase>>? = null
 
     private lateinit var phraseRecyclerAdapter: PhrasesRecyclerAdapter
-    private lateinit var phrasesFragmentBinding: FragmentPhrasesBinding
+    private lateinit var binding: FragmentPhrasesBinding
     private lateinit var sharedPreferences: SharedPreferences
     private val phraseViewModel: PhraseViewModel by viewModels()
+    private lateinit var phrasesList: RecyclerView
+
+    private lateinit var sourceLang: Language
+    private lateinit var destLang: Language
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        phrasesFragmentBinding = FragmentPhrasesBinding.inflate(inflater, container, false)
+        binding = FragmentPhrasesBinding.inflate(inflater, container, false)
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")))
+        destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")))
 
-        addPhraseRecyclerView()
+        binding.phrasesListSwipeRefresh.setOnRefreshListener {
+            sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")))
+            destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")))
 
-        return phrasesFragmentBinding.root
-    }
+            refreshRecyclerViewData(sourceLang, destLang)
 
-    private fun addPhraseRecyclerView() {
-        val phrasesList = phrasesFragmentBinding.phrasesList
+            phrasesListSwipeRefresh.isRefreshing = false
+        }
+
+        phrasesList = binding.phrasesList
 
         phraseRecyclerAdapter = PhrasesRecyclerAdapter(context)
         phrasesList.adapter = phraseRecyclerAdapter
         phrasesList.layoutManager = LinearLayoutManager(activity)
 
-        val sourceLang = sharedPreferences.getString("source_lang", "en")?.let { LocaleFlagHelper.get(it) }
-        val destLang = sharedPreferences.getString("dest_lang", "cy")?.let { LocaleFlagHelper.get(it) }
+        addPhraseRecyclerView()
+        refreshRecyclerViewData(sourceLang, destLang)
 
+        return binding.root
+    }
+
+    private fun addPhraseRecyclerView() {
         phraseRecyclerAdapter.clickListener = View.OnClickListener { view ->
             val sourceView: TextView = view.findViewById(R.id.source_text)
             Toast.makeText(context, "Phrase ${sourceView.text} clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        val phraseList = phraseViewModel.getPhrases(Language(Locale(sourceLang!!.localeCode)), Language(Locale(destLang!!.localeCode)))
-
-        if (oldPhraseList != phraseList) {
-            oldPhraseList?.removeObservers(viewLifecycleOwner)
-            oldPhraseList = phraseList
-        }
-
-        if (!phraseList.hasObservers()) {
-            phraseList.observe(viewLifecycleOwner) { phrases ->
-                Log.d("PhrasesFragment", "Observation!")
-                phraseRecyclerAdapter.changeData(phrases.toMutableList())
-            }
         }
 
         val itemTouchHelperCallback =
@@ -106,5 +105,20 @@ class PhrasesFragment : Fragment() {
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(phrasesList)
+    }
+
+    private fun refreshRecyclerViewData(sourceLang: Language, destLang: Language) {
+        val phraseList = phraseViewModel.getPhrases(sourceLang.getCode(), destLang.getCode())
+
+        if (oldPhraseList != phraseList) {
+            oldPhraseList?.removeObservers(viewLifecycleOwner)
+            oldPhraseList = phraseList
+        }
+
+        if (!phraseList.hasObservers()) {
+            phraseList.observe(viewLifecycleOwner) { phrases ->
+                phraseRecyclerAdapter.changeData(phrases.toMutableList())
+            }
+        }
     }
 }

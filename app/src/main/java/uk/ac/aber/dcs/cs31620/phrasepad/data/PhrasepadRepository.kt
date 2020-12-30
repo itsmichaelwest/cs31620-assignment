@@ -25,11 +25,12 @@ class PhrasepadRepository(application: Application) {
 
     fun getAllPhrases() = phrasepadDao.getAllPhrases()
 
-    fun getPhrases(sourceLang: Language, destLang: Language) = phrasepadDao.getPhrases(sourceLang, destLang)
+
+    fun getPhrases(sourceLang: String, destLang: String) = phrasepadDao.getPhrases(sourceLang, destLang)
 
     fun deletePhrase(phrase: Phrase) = phrasepadDao.deletePhrase(phrase)
 
     fun deleteAll() = phrasepadDao.deleteAll()
 
-    fun deleteSpecificLanguagePair(sourceLang: Language, destLang: Language) = phrasepadDao.deleteSpecificLanguagePair(sourceLang, destLang)
+    fun deleteSpecificLanguagePair(sourceLang: String, destLang: String) = phrasepadDao.deleteSpecificLanguagePair(sourceLang, destLang)
 }

@@ -17,11 +17,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import uk.ac.aber.dcs.cs31620.phrasepad.MainActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.SettingsActivityBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseDao
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhrasesFragment
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhrasesRecyclerAdapter
 import java.util.*
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -94,7 +97,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                     builder.setTitle(R.string.language_changed_header)
                         .setMessage(R.string.language_changed_message)
                         .setNegativeButton(R.string.language_changed_delete) { dialog, _ ->
-                            phraseViewModel.deleteSpecificLanguagePair(sourceLanguage, destLanguage)
+                            phraseViewModel.deleteSpecificLanguagePair(sourceLanguage.getCode(), destLanguage.getCode())
                             sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
                             destLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!))
                             Toast.makeText(this, R.string.language_changed_cleared, Toast.LENGTH_SHORT).show()

@@ -7,6 +7,12 @@
     <string name="add_phrase">Add Phrase</string>
     <string name="add_phrase_title">Add new phrase</string>
     <string name="save">Save</string>
+    <string name="phrase_entry_error">Please enter a phrase</string>
+
+    <!-- Set language sheet -->
+    <string name="set_language_header">Set language</string>
+    <string name="set_language_message">To begin using PhrasePad, set your source and destination languages. You can change these at any time in Settings.</string>
+    <string name="set_language_error">Please select a language</string>
 
     <!-- Preference Titles -->
     <string name="languages_header">Languages</string>

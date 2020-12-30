@@ -24,7 +24,6 @@ class PhrasesRecyclerAdapter(private val context: Context?) : RecyclerView.Adapt
         }
 
         fun bindData(phrase: Phrase) {
-            Log.d("PhrasesRecyclerBindData", "Binding data (inner)!")
             source.text = phrase.sourcePhrase
             translated.text = phrase.destPhrase
         }

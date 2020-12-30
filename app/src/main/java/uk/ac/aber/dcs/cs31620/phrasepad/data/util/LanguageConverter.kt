@@ -7,14 +7,17 @@ import java.util.*
 object LanguageConverter {
     @TypeConverter
     @JvmStatic
-    fun toString(language: Language) = language.toString()
+    fun toString(language: Language) = convertToString(language)
 
     @TypeConverter
     @JvmStatic
-    fun toLanguage(language: String) = convertToLanguage(language)
+    fun toLanguage(language: String): Language {
+        return convertToLanguage(language)
+    }
 
-    fun convertToLanguage(value: String): Language {
-        val returnLang = Language(Locale(value))
-        return returnLang
+    private fun convertToString(value: Language): String = value.locale.country
+
+    private fun convertToLanguage(value: String): Language {
+        return Language(Locale(value))
     }
 }

@@ -32,4 +32,10 @@
     <string name="set_language_message">Чтобы начать пользоваться PhrasePad, установите исходный и целевой языки. Вы можете изменить их в любое время в настройках.</string>
     <string name="set_language_error">Пожалуйста, выберите язык</string>
     <string name="phrase_entry_error">Пожалуйста, введите фразу</string>
+    <string name="yes">да</string>
+    <string name="no">Нет</string>
+    <string name="quiz_your_score">Your score is</string>
+    <string name="quiz_exit_early_message">Ваш текущий прогресс будет потерян!</string>
+    <string name="quiz_exit_early">Выйти из викторины?</string>
+    <string name="start_quiz">Начать викторину</string>
 </resources>

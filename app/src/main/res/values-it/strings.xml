@@ -32,4 +32,10 @@
     <string name="set_language_header">Imposta la lingua</string>
     <string name="phrase_entry_error">Inserisci una frase</string>
     <string name="set_language_error">Seleziona una lingua</string>
+    <string name="yes">Sì</string>
+    <string name="no">No</string>
+    <string name="start_quiz">Inizia il quiz</string>
+    <string name="quiz_exit_early">Uscire dal quiz?</string>
+    <string name="quiz_exit_early_message">I tuoi progressi attuali andranno persi!</string>
+    <string name="quiz_your_score">il tuo punteggio è</string>
 </resources>

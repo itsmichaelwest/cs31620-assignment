@@ -32,4 +32,10 @@
     <string name="set_language_message">Um PhrasePad zu verwenden, legen Sie Ihre Quell- und Zielsprache fest. Sie können diese jederzeit in den Einstellungen ändern.</string>
     <string name="phrase_entry_error">Bitte geben Sie eine Phrase ein</string>
     <string name="set_language_error">Bitte wähle eine Sprache</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="start_quiz">Starten Sie das Quiz</string>
+    <string name="quiz_exit_early">Quiz beenden?</string>
+    <string name="quiz_exit_early_message">Ihr aktueller Fortschritt geht verloren!</string>
+    <string name="quiz_your_score">Dein Ergebnis ist</string>
 </resources>

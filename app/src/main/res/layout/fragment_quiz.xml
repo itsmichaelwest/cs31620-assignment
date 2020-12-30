@@ -7,7 +7,7 @@
     tools:context=".ui.quiz.QuizFragment"
     android:id="@+id/quizFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment layout
     <Button
         android:id="@+id/buttonNewFrag"
         android:layout_width="wrap_content"
@@ -23,6 +23,6 @@
         android:layout_marginTop="16dp"
         android:text="@string/hello_blank_fragment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonNewFrag" /> -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

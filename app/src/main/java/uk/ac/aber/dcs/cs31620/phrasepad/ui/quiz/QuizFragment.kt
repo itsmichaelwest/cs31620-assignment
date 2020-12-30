@@ -27,6 +27,7 @@ class QuizFragment : Fragment() {
     ): View? {
         binding = FragmentQuizBinding.inflate(inflater)
 
+        /*
         binding.buttonNewFrag.setOnClickListener {
             val fragment = QuizFourChoicesFragment()
             Log.d("QuizFragment", "Button pressed")
@@ -35,6 +36,7 @@ class QuizFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+         */
 
         return binding.root
     }

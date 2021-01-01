@@ -1,42 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="phrases">Phrases</string>
-    <string name="search">Chercher</string>
-    <string name="quiz">Quiz</string>
-    <string name="title_activity_settings">Réglages</string>
-    <string name="add_phrase">Ajouter une phrase</string>
-    <string name="add_phrase_title">Ajouter une nouvelle phrase</string>
-    <string name="save">Sauver</string>
-    <string name="languages_header">Langages</string>
-    <string name="display_header">Afficher</string>
-    <string name="data_manage_header">Gestion de données</string>
-    <string name="source_language">Langue originelle</string>
-    <string name="destination_language">Langue destination</string>
-    <string name="always_dev_lang">Utilisez toujours la langue de l\'appareil</string>
-    <string name="always_dev_lang_summary">Utilisez la langue native de votre appareil pour tous les noms de langue, au lieu de leurs noms natifs</string>
-    <string name="theme">Thème de l\'application</string>
-    <string name="clear_all">Réinitialiser PhraseBook</string>
-    <string name="clear_all_summary">Cela effacera votre carnet de phrases. Toutes les phrases seront supprimées!</string>
-    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
-    <string name="notifications_header">Notifications d\'apprentissage</string>
-    <string name="notifications">Envoyer des notifications de quiz quotidiennes</string>
-    <string name="notifications_summary">Rappelez-vous de faire un quiz tous les jours à midi</string>
-    <string name="theme_sys_default">Défaut du système</string>
-    <string name="theme_light">Léger</string>
-    <string name="theme_dark">Sombre</string>
-    <string name="language_changed_header">Paire de langues modifiée</string>
-    <string name="language_changed_message">Vous pouvez enregistrer les phrases dans votre PhraseBook pour plus tard, il vous suffit de resélectionner la paire de langues. Ou vous pouvez effacer votre PhraseBook et recommencer.</string>
-    <string name="language_changed_delete">Effacer</string>
-    <string name="language_changed_cleared">PhraseBook effacé!</string>
-    <string name="set_language_message">Pour commencer à utiliser PhrasePad, définissez vos langues source et de destination. Vous pouvez les modifier à tout moment dans les paramètres.</string>
-    <string name="set_language_header">Définir la langue</string>
-    <string name="phrase_entry_error">Veuillez saisir une phrase</string>
-    <string name="set_language_error">Veuillez sélectionner une langue</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
-    <string name="quiz_your_score">Ton score est</string>
-    <string name="quiz_exit_early_message">Votre progression actuelle sera perdue!</string>
-    <string name="quiz_exit_early">Quitter le quiz?</string>
-    <string name="start_quiz">Lancer le quiz</string>
 </resources>

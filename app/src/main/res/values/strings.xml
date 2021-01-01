@@ -11,6 +11,10 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <!-- Notifications -->
+    <string name="notification_title">Quiz time!</string>
+    <string name="notification_content">Take your daily phrase quiz now</string>
+
     <!-- Set language sheet -->
     <string name="set_language_header">Set language</string>
     <string name="set_language_message">To begin using PhrasePad, set your source and destination languages. You can change these at any time in Settings.</string>

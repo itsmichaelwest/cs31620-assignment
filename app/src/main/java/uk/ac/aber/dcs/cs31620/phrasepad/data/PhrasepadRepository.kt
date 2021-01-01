@@ -1,6 +1,8 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.data
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,14 +25,25 @@ class PhrasepadRepository(application: Application) {
         }
     }
 
-    fun getAllPhrases() = phrasepadDao.getAllPhrases()
+    fun getAllPhrases(): LiveData<List<Phrase>> = phrasepadDao.getAllPhrases()
+    
+    fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> = phrasepadDao.getPhrases(sourceLang, destLang)
 
+    fun deletePhrase(phrase: Phrase) {
+        coroutineScope.launch(Dispatchers.IO) {
+            phrasepadDao.deletePhrase(phrase)
+        }
+    }
 
-    fun getPhrases(sourceLang: String, destLang: String) = phrasepadDao.getPhrases(sourceLang, destLang)
+    fun deleteAll() {
+        coroutineScope.launch(Dispatchers.IO) {
+            phrasepadDao.deleteAll()
+        }
+    }
 
-    fun deletePhrase(phrase: Phrase) = phrasepadDao.deletePhrase(phrase)
-
-    fun deleteAll() = phrasepadDao.deleteAll()
-
-    fun deleteSpecificLanguagePair(sourceLang: String, destLang: String) = phrasepadDao.deleteSpecificLanguagePair(sourceLang, destLang)
+    fun deleteSpecificLanguagePair(sourceLang: String, destLang: String) {
+        coroutineScope.launch(Dispatchers.IO) {
+            phrasepadDao.deleteSpecificLanguagePair(sourceLang, destLang)
+        }
+    }
 }

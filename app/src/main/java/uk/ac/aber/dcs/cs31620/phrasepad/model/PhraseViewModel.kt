@@ -3,6 +3,7 @@ package uk.ac.aber.dcs.cs31620.phrasepad.model
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 
 class PhraseViewModel(application: Application): AndroidViewModel(application) {

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,12 +18,14 @@ import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentAddPhraseBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
+import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
 class PhraseAddFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddPhraseBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private val phraseViewModel: PhraseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,8 +95,6 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
         if (origin.isEmpty() || destination.isEmpty()) {
             return false
         } else {
-            val repository = PhrasepadRepository(requireActivity().application)
-
             val phrase = Phrase(
                 0,
                 sourceLang.getCode(),
@@ -102,7 +103,7 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
                 destination
             )
 
-            repository.insert(phrase)
+            phraseViewModel.add(phrase)
 
             return true
         }

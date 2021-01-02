@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_phrases.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
@@ -44,16 +42,16 @@ class PhrasesFragment : Fragment() {
         binding = FragmentPhrasesBinding.inflate(inflater, container, false)
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
-        destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")!!))
+        sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "eng")!!))
+        destLang = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
         binding.phrasesListSwipeRefresh.setOnRefreshListener {
-            sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
-            destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")!!))
+            sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "eng")!!))
+            destLang = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
             refreshRecyclerViewData(sourceLang, destLang)
 
-            phrasesListSwipeRefresh.isRefreshing = false
+            binding.phrasesListSwipeRefresh.isRefreshing = false
         }
 
         phrasesList = binding.phrasesList

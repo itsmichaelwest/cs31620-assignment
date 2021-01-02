@@ -29,6 +29,8 @@ class PhrasepadRepository(application: Application) {
     
     fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> = phrasepadDao.getPhrases(sourceLang, destLang)
 
+    fun getDestPhraseFromSource(sourcePhrase: String): LiveData<Phrase> = phrasepadDao.getDestPhraseFromSource(sourcePhrase)
+
     fun deletePhrase(phrase: Phrase) {
         coroutineScope.launch(Dispatchers.IO) {
             phrasepadDao.deletePhrase(phrase)

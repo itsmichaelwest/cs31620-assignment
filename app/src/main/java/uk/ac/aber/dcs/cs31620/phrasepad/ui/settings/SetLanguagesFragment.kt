@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
-import androidx.core.view.isEmpty
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment_set_languages.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentSetLanguagesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
@@ -75,6 +73,15 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
                 editor.putString("dest_lang", destLang?.getCode())
                 editor.apply()
                 dismiss()
+            }
+        }
+
+        binding.nativeToggleSwitch.setOnCheckedChangeListener { _, isChecked ->
+            adapter.isDeviceLangNames = isChecked
+            adapter.notifyDataSetChanged()
+            with (sharedPreferences.edit()) {
+                putBoolean("always_dev_lang", isChecked)
+                apply()
             }
         }
 

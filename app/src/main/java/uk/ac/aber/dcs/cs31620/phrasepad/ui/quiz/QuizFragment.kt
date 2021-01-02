@@ -41,8 +41,8 @@ class QuizFragment : Fragment() {
         binding = FragmentQuizBinding.inflate(inflater)
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
-        destLang = Language(Locale(sharedPreferences.getString("dest_lang", "cy")!!))
+        sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "eng")!!))
+        destLang = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
         val phraseList = phraseViewModel.getPhrases(sourceLang.getCode(), destLang.getCode())
         var returnList: MutableList<Phrase> = mutableListOf()

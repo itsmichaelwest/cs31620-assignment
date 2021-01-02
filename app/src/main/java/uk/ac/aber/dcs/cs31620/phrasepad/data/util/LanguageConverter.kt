@@ -15,7 +15,7 @@ object LanguageConverter {
         return convertToLanguage(language)
     }
 
-    private fun convertToString(value: Language): String = value.locale.country
+    private fun convertToString(value: Language): String = value.locale.isO3Language
 
     private fun convertToLanguage(value: String): Language {
         return Language(Locale(value))

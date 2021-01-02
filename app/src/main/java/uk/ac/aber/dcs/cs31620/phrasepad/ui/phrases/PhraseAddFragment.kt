@@ -12,9 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment_add_phrase.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
-import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentAddPhraseBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
@@ -39,8 +37,8 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
         binding = FragmentAddPhraseBinding.inflate(inflater, container, false)
 
         // Get source/destination languages from preferences
-        val sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
-        val destinationLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!))
+        val sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "eng")!!))
+        val destinationLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
         // Use device locale specific names if requested
         val alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
@@ -57,12 +55,12 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
         binding.addPhraseSheet.findViewById<ImageView>(R.id.destLangFlag).setImageDrawable(destinationLanguage.getFlag(requireContext()))
 
         binding.saveButton.setOnClickListener {
-            if (textInputOriginLang.text.isNullOrEmpty()) {
-                editTextOriginLang.error = resources.getString(R.string.phrase_entry_error)
+            if (binding.textInputOriginLang.text.isNullOrEmpty()) {
+                binding.editTextOriginLang.error = resources.getString(R.string.phrase_entry_error)
             }
 
-            if (textInputDestLang.text.isNullOrEmpty()) {
-                editTextDestLang.error = resources.getString(R.string.phrase_entry_error)
+            if (binding.textInputDestLang.text.isNullOrEmpty()) {
+                binding.editTextDestLang.error = resources.getString(R.string.phrase_entry_error)
             }
 
             if (savePhrase(binding.textInputOriginLang.text.toString(), binding.textInputDestLang.text.toString(), sourceLanguage, destinationLanguage)) {

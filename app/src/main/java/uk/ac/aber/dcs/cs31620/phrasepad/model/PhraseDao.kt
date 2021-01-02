@@ -30,5 +30,5 @@ interface PhraseDao {
     fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>>
 
     @Query("SELECT * FROM phrases WHERE sourcePhrase = :sourcePhrase")
-    fun getDestPhraseFromSource(sourcePhrase: String): LiveData<List<Phrase>>
+    fun getDestPhraseFromSource(sourcePhrase: String): LiveData<Phrase>
 }

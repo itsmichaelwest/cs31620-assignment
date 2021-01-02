@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import kotlinx.android.synthetic.main.toolbar_hero.view.*
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
@@ -80,18 +79,19 @@ class MainActivity : AppCompatActivity() {
             Locale(
                 PreferenceManager.getDefaultSharedPreferences(
                     applicationContext
-                ).getString("dest_lang", "en")!!
+                ).getString("dest_lang", "eng")!!
             )
         )
         var alwaysDevLang = PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean(
             "always_dev_lang",
             false
         )
+
         val langFlag = findViewById<ImageView>(R.id.langFlag) // We need to find the view by id for some reason, binding doesn't work
         if (alwaysDevLang)
-            binding.toolbar.toolbar.toolbar_title.text = destinationLanguage.getDeviceLangName()
+            binding.toolbar.toolbarTitle.text = destinationLanguage.getDeviceLangName()
         else
-            binding.toolbar.toolbar.toolbar_title.text = destinationLanguage.getNativeName()
+            binding.toolbar.toolbarTitle.text = destinationLanguage.getNativeName()
         langFlag.setImageDrawable(destinationLanguage.getFlag(applicationContext))
 
         // Set up notification
@@ -115,29 +115,29 @@ class MainActivity : AppCompatActivity() {
                     "dest_lang" -> {
                         alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
                         if (alwaysDevLang)
-                            binding.toolbar.toolbar.toolbar_title.text = Language(
+                            binding.toolbar.toolbarTitle.text = Language(
                                 Locale(
                                     sharedPreferences.getString(
                                         "dest_lang",
-                                        "en"
+                                        "eng"
                                     )!!
                                 )
                             ).getDeviceLangName()
                         else
-                            binding.toolbar.toolbar.toolbar_title.text = Language(
+                            binding.toolbar.toolbarTitle.text = Language(
                                 Locale(
                                     sharedPreferences.getString(
                                         "dest_lang",
-                                        "en"
+                                        "eng"
                                     )!!
                                 )
                             ).getNativeName()
-                        langFlag.setImageDrawable(
+                        binding.toolbar.langFlag.setImageDrawable(
                             Language(
                                 Locale(
                                     sharedPreferences.getString(
                                         "dest_lang",
-                                        "en"
+                                        "eng"
                                     )!!
                                 )
                             ).getFlag(applicationContext)
@@ -146,20 +146,20 @@ class MainActivity : AppCompatActivity() {
                     "always_dev_lang" -> {
                         alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
                         if (alwaysDevLang) {
-                            binding.toolbar.toolbar.toolbar_title.text = Language(
+                            binding.toolbar.toolbarTitle.text = Language(
                                 Locale(
                                     sharedPreferences.getString(
                                         "dest_lang",
-                                        "en"
+                                        "eng"
                                     )!!
                                 )
                             ).getDeviceLangName()
                         } else {
-                            binding.toolbar.toolbar.toolbar_title.text = Language(
+                            binding.toolbar.toolbarTitle.text = Language(
                                 Locale(
                                     sharedPreferences.getString(
                                         "dest_lang",
-                                        "en"
+                                        "eng"
                                     )!!
                                 )
                             ).getNativeName()

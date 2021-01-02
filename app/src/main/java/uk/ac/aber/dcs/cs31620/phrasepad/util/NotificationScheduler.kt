@@ -10,14 +10,16 @@ import android.os.Parcelable
 class NotificationScheduler : BroadcastReceiver() {
 
     companion object {
-        var  NOTIFICATION_ID = "1"
+        var NOTIFICATION_ID = "1"
         var NOTIFICATION = "notification"
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notification: Notification = intent?.getParcelableExtra<Parcelable>(NOTIFICATION) as Notification
-        val id: Int = intent?.getIntExtra(NOTIFICATION_ID, 0) as Int
+        val notificationManager =
+            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notification: Notification =
+            intent?.getParcelableExtra<Parcelable>(NOTIFICATION) as Notification
+        val id: Int = intent.getIntExtra(NOTIFICATION_ID, 0)
         notificationManager.notify(id, notification)
     }
 }

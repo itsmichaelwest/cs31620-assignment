@@ -11,13 +11,9 @@ object LanguageConverter {
 
     @TypeConverter
     @JvmStatic
-    fun toLanguage(language: String): Language {
-        return convertToLanguage(language)
-    }
+    fun toLanguage(language: String): Language = convertToLanguage(language)
 
     private fun convertToString(value: Language): String = value.locale.isO3Language
 
-    private fun convertToLanguage(value: String): Language {
-        return Language(Locale(value))
-    }
+    private fun convertToLanguage(value: String): Language = Language(Locale(value))
 }

@@ -14,7 +14,6 @@ import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentSetLanguagesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import java.util.*
 
-
 class SetLanguagesFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentSetLanguagesBinding
@@ -28,7 +27,7 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSetLanguagesBinding.inflate(inflater, container, false)
 
         val languageCodes = resources.getStringArray(R.array.languages_codes).toList()
@@ -37,7 +36,11 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
             languageList.add(Language(Locale(language)))
         }
 
-        val adapter = SetLanguagesAutocompleteAdapter(requireContext(), R.layout.language_list_item, languageList)
+        val adapter = SetLanguagesAutocompleteAdapter(
+            requireContext(),
+            R.layout.language_list_item,
+            languageList
+        )
 
         (binding.sourceLangDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         (binding.destLangDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)
@@ -67,7 +70,7 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
             else
                 isReadyToCommitDest = true
 
-            if(isReadyToCommitSource && isReadyToCommitDest) {
+            if (isReadyToCommitSource && isReadyToCommitDest) {
                 val editor = sharedPreferences.edit()
                 editor.putString("source_lang", sourceLang?.getCode())
                 editor.putString("dest_lang", destLang?.getCode())
@@ -77,7 +80,7 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
         }
 
         binding.nativeToggleSwitch.setOnCheckedChangeListener { _, isChecked ->
-            with (sharedPreferences.edit()) {
+            with(sharedPreferences.edit()) {
                 putBoolean("always_dev_lang", isChecked)
                 apply()
             }
@@ -89,7 +92,7 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
             AlertDialog.Builder(context)
                 .setTitle(resources.getString(R.string.set_sample_dialog_title))
                 .setMessage(resources.getString(R.string.set_sample_dialog_message))
-                .setPositiveButton(resources.getString(R.string.yes)) { dialog, id ->
+                .setPositiveButton(resources.getString(R.string.yes)) { _, _ ->
                     // Set source language to English, destination to Welsh
                     val editor = sharedPreferences.edit()
                     editor.putString("source_lang", "eng")

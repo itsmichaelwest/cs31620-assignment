@@ -2,11 +2,9 @@ package uk.ac.aber.dcs.cs31620.phrasepad.data
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 
 class PhrasepadRepository(application: Application) {
@@ -19,19 +17,14 @@ class PhrasepadRepository(application: Application) {
         }
     }
 
-    fun insertMultiplePhrases(phrases: List<Phrase>) {
-        coroutineScope.launch(Dispatchers.IO) {
-            phrasepadDao.insertMultiplePhrases(phrases)
-        }
-    }
+    fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> =
+        phrasepadDao.getPhrases(sourceLang, destLang)
 
-    fun getAllPhrases(): LiveData<List<Phrase>> = phrasepadDao.getAllPhrases()
-    
-    fun getPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> = phrasepadDao.getPhrases(sourceLang, destLang)
+    fun getDestPhraseFromSource(sourcePhrase: String): LiveData<Phrase> =
+        phrasepadDao.getDestPhraseFromSource(sourcePhrase)
 
-    fun getDestPhraseFromSource(sourcePhrase: String): LiveData<Phrase> = phrasepadDao.getDestPhraseFromSource(sourcePhrase)
-
-    fun getFourPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> = phrasepadDao.getFourPhrases(sourceLang, destLang)
+    fun getFourPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> =
+        phrasepadDao.getFourPhrases(sourceLang, destLang)
 
     fun deletePhrase(phrase: Phrase) {
         coroutineScope.launch(Dispatchers.IO) {

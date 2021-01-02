@@ -33,20 +33,23 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddPhraseBinding.inflate(inflater, container, false)
 
         // Get source/destination languages from preferences
         val sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "eng")!!))
-        val destinationLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
+        val destinationLanguage =
+            Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
         // Use device locale specific names if requested
         binding.editTextOriginLang.hint = sourceLanguage.getPreferredName(requireContext())
         binding.editTextDestLang.hint = destinationLanguage.getPreferredName(requireContext())
 
         // Set language flags
-        binding.addPhraseSheet.findViewById<ImageView>(R.id.sourceLangFlag).setImageDrawable(sourceLanguage.getFlag(requireContext()))
-        binding.addPhraseSheet.findViewById<ImageView>(R.id.destLangFlag).setImageDrawable(destinationLanguage.getFlag(requireContext()))
+        binding.addPhraseSheet.findViewById<ImageView>(R.id.sourceLangFlag)
+            .setImageDrawable(sourceLanguage.getFlag(requireContext()))
+        binding.addPhraseSheet.findViewById<ImageView>(R.id.destLangFlag)
+            .setImageDrawable(destinationLanguage.getFlag(requireContext()))
 
         binding.saveButton.setOnClickListener {
             if (binding.textInputOriginLang.text.isNullOrEmpty()) {
@@ -57,7 +60,13 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
                 binding.editTextDestLang.error = resources.getString(R.string.phrase_entry_error)
             }
 
-            if (savePhrase(binding.textInputOriginLang.text.toString(), binding.textInputDestLang.text.toString(), sourceLanguage, destinationLanguage)) {
+            if (savePhrase(
+                    binding.textInputOriginLang.text.toString(),
+                    binding.textInputDestLang.text.toString(),
+                    sourceLanguage,
+                    destinationLanguage
+                )
+            ) {
                 dismiss()
             }
         }
@@ -83,9 +92,14 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun savePhrase(origin: String, destination: String, sourceLang: Language, destLang: Language): Boolean {
-        if (origin.isEmpty() || destination.isEmpty()) {
-            return false
+    private fun savePhrase(
+        origin: String,
+        destination: String,
+        sourceLang: Language,
+        destLang: Language
+    ): Boolean {
+        return if (origin.isEmpty() || destination.isEmpty()) {
+            false
         } else {
             val phrase = Phrase(
                 0,
@@ -97,7 +111,7 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
 
             phraseViewModel.add(phrase)
 
-            return true
+            true
         }
     }
 }

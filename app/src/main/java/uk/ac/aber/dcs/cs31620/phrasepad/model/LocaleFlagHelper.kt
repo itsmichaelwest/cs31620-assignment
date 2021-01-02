@@ -1,6 +1,5 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.model
 
-import android.util.Log
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 
 // Helper class to retrieve the flag of a locale/language
@@ -94,9 +93,8 @@ enum class LocaleFlagHelper(val iso3Language: String, val flag: Int) {
     YIDDISH("yid", R.drawable.yid_prop),
     ZULU("zul", R.drawable.za);
 
-
-
     companion object {
-        fun get(searchValue: String): LocaleFlagHelper = values().first { it.iso3Language == searchValue }
+        fun get(searchValue: String): LocaleFlagHelper =
+            values().first { it.iso3Language == searchValue }
     }
 }

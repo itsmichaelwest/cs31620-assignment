@@ -52,8 +52,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                 window.navigationBarColor = a.data
             }
 
-            val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            when(currentNightMode) {
+            when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_NO -> {
                     window.decorView.windowInsetsController?.setSystemBarsAppearance(
                         APPEARANCE_LIGHT_NAVIGATION_BARS,
@@ -71,7 +70,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        when (key){
+        when (key) {
             "theme" -> {
                 when (sharedPreferences.getString("theme", "0")) {
                     "0" -> {
@@ -150,12 +149,13 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                 AlertDialog.Builder(requireContext())
                     .setTitle(resources.getString(R.string.clear_all) + "?")
                     .setMessage(resources.getString(R.string.clear_all_dialog_message))
-                    .setPositiveButton(resources.getString(R.string.no)) { dialog, id -> dialog.dismiss() }
-                    .setNegativeButton(resources.getString(R.string.yes)) { dialog, id ->
-                        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+                    .setPositiveButton(resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                    .setNegativeButton(resources.getString(R.string.yes)) { _, _ ->
+                        val sharedPreferences =
+                            PreferenceManager.getDefaultSharedPreferences(context)
                         val editor = sharedPreferences.edit()
                         editor.clear()
-                        editor.commit()
+                        editor.apply()
                         PreferenceManager.setDefaultValues(context, R.xml.root_preferences, true)
                     }
                     .create()

@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.QuizListItemBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 
-class QuizRecyclerAdapter(private val context: Context?) : RecyclerView.Adapter<QuizRecyclerAdapter.ViewHolder>() {
+class QuizRecyclerAdapter(private val context: Context?) :
+    RecyclerView.Adapter<QuizRecyclerAdapter.ViewHolder>() {
     private var data: List<Phrase> = listOf()
 
-    inner class ViewHolder(itemView: View, private val phraseToTest: TextView): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, private val phraseToTest: TextView) :
+        RecyclerView.ViewHolder(itemView) {
         fun bindData(phrase: Phrase) {
             phraseToTest.text = phrase.sourcePhrase
         }

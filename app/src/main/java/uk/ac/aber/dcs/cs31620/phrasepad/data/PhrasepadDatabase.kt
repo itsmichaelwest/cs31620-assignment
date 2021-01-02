@@ -1,8 +1,6 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.data
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -28,7 +26,11 @@ abstract class PhrasepadDatabase : RoomDatabase() {
         fun getDatabase(context: Context): PhrasepadDatabase? {
             synchronized(this) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext, PhrasepadDatabase::class.java, "phrasepad_database").allowMainThreadQueries().addCallback(roomDatabaseCallback(context)).build()
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        PhrasepadDatabase::class.java,
+                        "phrasepad_database"
+                    ).allowMainThreadQueries().addCallback(roomDatabaseCallback(context)).build()
                 }
                 return instance!!
             }
@@ -39,14 +41,14 @@ abstract class PhrasepadDatabase : RoomDatabase() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
                     coroutineScope.launch(Dispatchers.IO) {
-                        populateSampleDatabase(context, getDatabase(context)!!)
+                        populateSampleDatabase(getDatabase(context)!!)
                     }
                 }
             }
         }
 
         // Populate the database if we've requested a sample
-        private fun populateSampleDatabase(context: Context, instance: PhrasepadDatabase) {
+        private fun populateSampleDatabase(instance: PhrasepadDatabase) {
             val sourceLang = "eng"
             val destLang = "cym"
 

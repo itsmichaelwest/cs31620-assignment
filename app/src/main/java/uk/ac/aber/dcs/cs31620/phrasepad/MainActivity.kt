@@ -10,11 +10,8 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.RecyclerView
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
-import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhraseAddFragment
@@ -22,7 +19,6 @@ import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SetLanguagesFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.util.NotificationScheduler
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        when(sharedPreferences.getString("theme", "0")) {
+        when (sharedPreferences.getString("theme", "0")) {
             "0" -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
@@ -66,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // Settings menu listener
-        binding.toolbar.toolbar.setOnMenuItemClickListener{ menuItem ->
+        binding.toolbar.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.tb_settings -> {
                     val intent = Intent(this, SettingsActivity::class.java)
@@ -85,16 +81,19 @@ class MainActivity : AppCompatActivity() {
                 ).getString("dest_lang", "eng")!!
             )
         )
-        val langFlag = findViewById<ImageView>(R.id.langFlag) // We need to find the view by id for some reason, binding doesn't work
+        val langFlag =
+            findViewById<ImageView>(R.id.langFlag) // We need to find the view by id for some reason, binding doesn't work
         binding.toolbar.toolbarTitle.text = destinationLanguage.getPreferredName(applicationContext)
         langFlag.setImageDrawable(destinationLanguage.getFlag(applicationContext))
 
         // Set up notification
-        var learningNotif = PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean(
-            "daily_quiz_notification",
-            false
-        )
-        val notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        var learningNotif =
+            PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean(
+                "daily_quiz_notification",
+                false
+            )
+        val notificationManager =
+            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channel = NotificationChannel(
             "1",
             resources.getString(R.string.notifications_header),
@@ -112,8 +111,10 @@ class MainActivity : AppCompatActivity() {
             OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 when (key) {
                     "dest_lang" -> {
-                        val language = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
-                        binding.toolbar.toolbarTitle.text = language.getPreferredName(applicationContext)
+                        val language =
+                            Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
+                        binding.toolbar.toolbarTitle.text =
+                            language.getPreferredName(applicationContext)
                         binding.toolbar.langFlag.setImageDrawable(
                             Language(
                                 Locale(
@@ -126,7 +127,8 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                     "always_dev_lang" -> {
-                        binding.toolbar.toolbarTitle.text = destinationLanguage.getPreferredName(applicationContext)
+                        binding.toolbar.toolbarTitle.text =
+                            destinationLanguage.getPreferredName(applicationContext)
                     }
                     "daily_quiz_notification" -> {
                         learningNotif = !learningNotif
@@ -137,15 +139,16 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        PreferenceManager.getDefaultSharedPreferences(applicationContext).registerOnSharedPreferenceChangeListener(
-            listener
-        )
+        PreferenceManager.getDefaultSharedPreferences(applicationContext)
+            .registerOnSharedPreferenceChangeListener(
+                listener
+            )
 
         // Set up bottom navigation
         val bottomNavigation = binding.bottomNavigation
         val bottomNavigationController = findNavController(R.id.navigation_fragment_host)
         bottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.bnav_phrases -> {
                     binding.floatingActionButton.show()
                     bottomNavigationController.navigate(R.id.bnav_phrases)
@@ -212,8 +215,8 @@ class MainActivity : AppCompatActivity() {
         )
 
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 12)
+        calendar.set(Calendar.MINUTE, 0)
 
         val manager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

@@ -1,15 +1,14 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.quiz
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import uk.ac.aber.dcs.cs31620.phrasepad.R
@@ -19,11 +18,8 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
-
 /**
  * A simple [Fragment] subclass.
- * Use the [Quiz.newInstance] factory method to
- * create an instance of this fragment.
  */
 class QuizFragment : Fragment() {
 
@@ -42,7 +38,7 @@ class QuizFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentQuizBinding.inflate(inflater)
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -57,8 +53,7 @@ class QuizFragment : Fragment() {
         quizRecyclerAdapter.setListener(object : QuizRecyclerAdapter.ItemClickListener {
             override fun onItemClick(position: Int) {
                 val selected = quizRecyclerAdapter.getPhraseAt(position)
-                if (selected == correct) {
-                    Toast.makeText(context, "Correct!", Toast.LENGTH_SHORT).show()
+                if (selected.destPhrase == correct.destPhrase) {
                     score++
                     binding.score.text = resources.getString(R.string.quiz_your_score, score)
                     refreshQuizQuestions()
@@ -70,8 +65,19 @@ class QuizFragment : Fragment() {
 
         binding.buttonStartQuiz.setOnClickListener {
             refreshQuizQuestions()
-            binding.buttonStartQuiz.visibility = View.GONE
-            binding.quizLayout.visibility = View.VISIBLE
+        }
+
+        binding.buttonEndQuiz.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle(resources.getString(R.string.quiz_exit_early))
+                .setMessage(resources.getString(R.string.quiz_exit_early_message))
+                .setPositiveButton(resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                .setNegativeButton(resources.getString(R.string.yes)) { dialog, _ ->
+                    dialog.dismiss()
+                    finishQuiz()
+                }
+                .create()
+                .show()
         }
 
         return binding.root
@@ -84,10 +90,25 @@ class QuizFragment : Fragment() {
         )
 
         fourPhraseList.observe(viewLifecycleOwner) { phrases ->
-            quizRecyclerAdapter.changeData(phrases.toMutableList())
+            if (phrases.isNotEmpty()) {
+                quizRecyclerAdapter.changeData(phrases.toMutableList())
 
-            correct = phrases.shuffled().take(1)[0]
-            binding.phraseTested.text = correct.destPhrase
+                correct = phrases.shuffled().take(1)[0]
+                binding.phraseTested.text = correct.destPhrase
+                binding.buttonStartQuiz.visibility = View.GONE
+                binding.quizLayout.visibility = View.VISIBLE
+            } else {
+                AlertDialog.Builder(context)
+                    .setTitle(resources.getString(R.string.start_quiz_error_title))
+                    .setMessage(resources.getString(R.string.start_quiz_error_message))
+                    .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ -> dialog.dismiss() }
+                    .create()
+                    .show()
+            }
         }
+    }
+
+    private fun finishQuiz() {
+
     }
 }

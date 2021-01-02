@@ -11,6 +11,7 @@
     <string name="phrase_entry_error">Enter a phrase</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
 
     <!-- Notifications -->
     <string name="notification_title">Quiz time!</string>
@@ -22,15 +23,15 @@
     <string name="set_language_error">Select a language</string>
     <string name="set_sample">Sample PhrasePad</string>
     <string name="set_sample_dialog_title">Use sample database and phrases?</string>
-    <string name="set_sample_dialog_message">You can start PhrasePad with a pre-defined set of phrases between English and Welsh. This is a great way to demo functionality without needing to input data.
-
-Refresh the list to view the sample phrases.</string>
+    <string name="set_sample_dialog_message">You can start PhrasePad with a pre-defined set of phrases between English and Welsh. This is a great way to demo functionality without needing to input data. Refresh the list to view the sample phrases.</string>
 
     <!-- Quizzes -->
     <string name="start_quiz">Start quiz</string>
     <string name="quiz_exit_early">Exit quiz?</string>
     <string name="quiz_exit_early_message">Your current progress will be lost!</string>
     <string name="quiz_your_score">Your score is: %1$d</string>
+    <string name="start_quiz_error_title">No phrases!</string>
+    <string name="start_quiz_error_message">You need to add some phrases in order to take a quiz.</string>
 
     <!-- Preference Titles -->
     <string name="languages_header">Languages</string>

@@ -18,24 +18,25 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
 
-class PhraseDetailFragment(phrase: Phrase) : BottomSheetDialogFragment() {
+class PhraseDetailFragment(private var phrase: Phrase) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentPhraseDetailBinding
-    private var phrase: Phrase = phrase
     private val phraseViewModel: PhraseViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentPhraseDetailBinding.inflate(inflater, container, false)
 
         binding.sourceLangFlag.setImageResource(LocaleFlagHelper.get(phrase.sourceLang).flag)
-        binding.sourceLangName.text = Language(Locale(phrase.sourceLang)).getPreferredName(requireContext())
+        binding.sourceLangName.text =
+            Language(Locale(phrase.sourceLang)).getPreferredName(requireContext())
         binding.sourceLangText.text = phrase.sourcePhrase
 
         binding.destLangFlag.setImageResource(LocaleFlagHelper.get(phrase.destLang).flag)
-        binding.destLangName.text = Language(Locale(phrase.destLang)).getPreferredName(requireContext())
+        binding.destLangName.text =
+            Language(Locale(phrase.destLang)).getPreferredName(requireContext())
         binding.destLangText.text = phrase.destPhrase
 
         binding.deletePhrase.setOnClickListener {

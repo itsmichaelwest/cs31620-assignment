@@ -3,50 +3,38 @@ package uk.ac.aber.dcs.cs31620.phrasepad
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
+import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleFlagHelper
 import java.util.*
 
 class LanguageTests {
-    /*
     @Test
-    fun createEmptyModel() {
+    fun createEmptyLanguage() {
         val english = Language()
-        assertEquals("", english)
+        assertEquals("eng", english.getCode())
     }
 
     @Test
-    fun createModelWithNameAndISO6391Code() {
-        val english = Language("English", Locale.ENGLISH)
-        assertEquals("English", english.name)
-        assertEquals(Locale.ENGLISH, english.locale)
+    fun createLanguageUsingLocaleFramework() {
+        val french = Language(Locale.FRANCE)
+        assertEquals("fra", french.getCode())
     }
 
     @Test
-    fun createPhrasebookWithTwoLanguages() {
-        val phrasebook = Phrasebook(Language("English", Locale.ENGLISH), Language("Welsh", Locale("cy_gb")))
-        assertEquals("English", phrasebook.knownLanguage.name)
-        assertEquals(Locale("cy_gb"), phrasebook.unknownLanguage.locale)
+    fun getLanguageNativeName() {
+        val french = Language(Locale.FRANCE)
+        assertEquals("Français", french.getNativeName())
     }
 
     @Test
-    fun createPhrasebookAddPhrase() {
-        val phrasebook = Phrasebook(Language("English", Locale.ENGLISH), Language("Welsh", Locale("cy_gb")))
-        phrasebook.addPhrase("morning", "bore da")
-        assertEquals("bore da", phrasebook.phrasebook.get("morning"))
+    fun getLanguageEnglishName() {
+        val french = Language(Locale.FRANCE)
+        assertEquals("French", french.getDeviceLangName())
     }
 
     @Test
-    fun createPhrasebookGetPhraseProperly() {
-        val phrasebook = Phrasebook(Language("English", Locale.ENGLISH), Language("Welsh", Locale("cy_gb")))
-        phrasebook.addPhrase("morning", "bore da")
-        val phrase = phrasebook.getPhrase("morning")
-        assertEquals("bore da", phrase)
+    fun getFlagDrawable() {
+        val french = Language(Locale.FRANCE)
+        val flag = LocaleFlagHelper.get(french.getCode())
+        assertEquals(R.drawable.fr, flag.flag)
     }
-
-    @Test
-    fun getUnknownPhraseLanguage() {
-        val phrasebook = Phrasebook(Language("English", Locale.ENGLISH), Language("Welsh", Locale("cy_gb")))
-        phrasebook.addPhrase("morning", "bore da")
-
-    }
-     */
 }

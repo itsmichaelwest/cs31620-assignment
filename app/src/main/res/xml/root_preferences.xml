@@ -19,6 +19,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/notifications_header">
+
+        <SwitchPreference
+            android:key="daily_quiz_notification"
+            android:title="@string/notifications"
+            android:summary="@string/notifications_summary" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/display_header">
 
         <ListPreference
@@ -30,9 +39,9 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
-            android:key="always_english"
-            android:title="@string/always_english"
-            android:summary="@string/always_english_summary" />
+            android:key="always_dev_lang"
+            android:title="@string/always_dev_lang"
+            android:summary="@string/always_dev_lang_summary" />
 
     </PreferenceCategory>
 

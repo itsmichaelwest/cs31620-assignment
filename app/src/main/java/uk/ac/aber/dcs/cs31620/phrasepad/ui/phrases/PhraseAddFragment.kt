@@ -2,69 +2,73 @@ package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.DialogFragment
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.fragment_add_phrase.*
 import uk.ac.aber.dcs.cs31620.phrasepad.R
-import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentAddPhraseBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
-import uk.ac.aber.dcs.cs31620.phrasepad.model.Locales
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
+import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
-class PhraseAddFragment: BottomSheetDialogFragment() {
+class PhraseAddFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddPhraseBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private val phraseViewModel: PhraseViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setStyle(DialogFragment.STYLE_NORMAL, R.style.PhrasePad_BottomSheet)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddPhraseBinding.inflate(inflater, container, false)
 
-        val sourceLang = sharedPreferences.getString("source_lang", "en")?.let { Locales.get(it) }
-        val destLang = sharedPreferences.getString("dest_lang", "cy")?.let { Locales.get(it) }
+        // Get source/destination languages from preferences
+        val sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "eng")!!))
+        val destinationLanguage =
+            Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
-        if (!sharedPreferences.getBoolean("always_english", false)) {
-            binding.editTextOriginLang.hint = sourceLang?.localeName
-            binding.editTextDestLang.hint = destLang?.localeName
-        } else {
-            binding.editTextOriginLang.hint = sourceLang?.localeNameEnglish
-            binding.editTextDestLang.hint = destLang?.localeNameEnglish
-        }
+        // Use device locale specific names if requested
+        binding.editTextOriginLang.hint = sourceLanguage.getPreferredName(requireContext())
+        binding.editTextDestLang.hint = destinationLanguage.getPreferredName(requireContext())
 
-        binding.saveButton.setOnClickListener { view ->
-            if (textInputOriginLang.text.isNullOrEmpty()) {
-                textInputOriginLang.error = "Please enter a phrase"
+        // Set language flags
+        binding.addPhraseSheet.findViewById<ImageView>(R.id.sourceLangFlag)
+            .setImageDrawable(sourceLanguage.getFlag(requireContext()))
+        binding.addPhraseSheet.findViewById<ImageView>(R.id.destLangFlag)
+            .setImageDrawable(destinationLanguage.getFlag(requireContext()))
+
+        binding.saveButton.setOnClickListener {
+            if (binding.textInputOriginLang.text.isNullOrEmpty()) {
+                binding.editTextOriginLang.error = resources.getString(R.string.phrase_entry_error)
             }
 
-            if (textInputDestLang.text.isNullOrEmpty()) {
-                textInputDestLang.error = "Please enter a phrase"
+            if (binding.textInputDestLang.text.isNullOrEmpty()) {
+                binding.editTextDestLang.error = resources.getString(R.string.phrase_entry_error)
             }
 
-            if (savePhrase(binding.textInputOriginLang.text.toString(), binding.textInputDestLang.text.toString())) {
+            if (savePhrase(
+                    binding.textInputOriginLang.text.toString(),
+                    binding.textInputDestLang.text.toString(),
+                    sourceLanguage,
+                    destinationLanguage
+                )
+            ) {
                 dismiss()
             }
-        }
-
-        binding.dismissButton.setOnClickListener { view ->
-            dismiss()
         }
 
         binding.editTextOriginLang.requestFocus()
@@ -72,23 +76,42 @@ class PhraseAddFragment: BottomSheetDialogFragment() {
         return binding.root
     }
 
-    private fun savePhrase(origin: String, destination: String): Boolean {
-        if (origin.isEmpty() || destination.isEmpty()) {
-            return false
-        } else {
-            val repository = PhrasepadRepository(requireActivity().application)
+    override fun onStart() {
+        super.onStart()
+        if (dialog != null) {
+            val bottomSheet = dialog!!.findViewById<ConstraintLayout>(R.id.add_phrase_sheet)
+            bottomSheet.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        }
+        view?.post {
+            val parent = requireView().parent as View
+            val params = parent.layoutParams as CoordinatorLayout.LayoutParams
+            val behavior = params.behavior
 
+            val bottomSheetBehavior = behavior as BottomSheetBehavior
+            bottomSheetBehavior.setPeekHeight(requireView().measuredHeight)
+        }
+    }
+
+    private fun savePhrase(
+        origin: String,
+        destination: String,
+        sourceLang: Language,
+        destLang: Language
+    ): Boolean {
+        return if (origin.isEmpty() || destination.isEmpty()) {
+            false
+        } else {
             val phrase = Phrase(
                 0,
-                sharedPreferences.getString("source_lang", "en"),
-                sharedPreferences.getString("dest_lang", "cy"),
+                sourceLang.getCode(),
+                destLang.getCode(),
                 origin,
                 destination
             )
 
-            repository.insert(phrase)
+            phraseViewModel.add(phrase)
 
-            return true
+            true
         }
     }
 }

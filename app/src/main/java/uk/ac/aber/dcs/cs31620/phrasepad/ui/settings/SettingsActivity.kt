@@ -1,30 +1,24 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.settings
 
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
-import android.view.WindowInsetsController.*
+import android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.viewModels
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
-import uk.ac.aber.dcs.cs31620.phrasepad.MainActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.SettingsActivityBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
-import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseDao
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
-import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhrasesFragment
-import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhrasesRecyclerAdapter
 import java.util.*
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -97,10 +91,31 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                     builder.setTitle(R.string.language_changed_header)
                         .setMessage(R.string.language_changed_message)
                         .setNegativeButton(R.string.language_changed_delete) { dialog, _ ->
-                            phraseViewModel.deleteSpecificLanguagePair(sourceLanguage.getCode(), destLanguage.getCode())
-                            sourceLanguage = Language(Locale(sharedPreferences.getString("source_lang", "en")!!))
-                            destLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "en")!!))
-                            Toast.makeText(this, R.string.language_changed_cleared, Toast.LENGTH_SHORT).show()
+                            phraseViewModel.deleteSpecificLanguagePair(
+                                sourceLanguage.getCode(),
+                                destLanguage.getCode()
+                            )
+                            sourceLanguage = Language(
+                                Locale(
+                                    sharedPreferences.getString(
+                                        "source_lang",
+                                        "eng"
+                                    )!!
+                                )
+                            )
+                            destLanguage = Language(
+                                Locale(
+                                    sharedPreferences.getString(
+                                        "dest_lang",
+                                        "eng"
+                                    )!!
+                                )
+                            )
+                            Toast.makeText(
+                                this,
+                                R.string.language_changed_cleared,
+                                Toast.LENGTH_SHORT
+                            ).show()
                             dialog.dismiss()
                             finish()
                         }
@@ -111,11 +126,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                     builder.create()
                     if (!isFinishing) {
                         builder.show()
-                    } else {
-                        Log.d("SettingsActivity", "Another crash point...")
                     }
-                } else {
-                    Log.d("SettingsActivity", "Not finished, so we might crash here!")
                 }
             }
         }
@@ -130,6 +141,27 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+
+            // Reset preferences button. This is really messy, the app intentionally crashes when we
+            // clear the preferences. There must be a better way, but we need the app to close anyway
+            // so the user can select a new language pair.
+            val resetPreference = findPreference<Preference>("clear_all")
+            resetPreference?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                AlertDialog.Builder(requireContext())
+                    .setTitle(resources.getString(R.string.clear_all) + "?")
+                    .setMessage(resources.getString(R.string.clear_all_dialog_message))
+                    .setPositiveButton(resources.getString(R.string.no)) { dialog, id -> dialog.dismiss() }
+                    .setNegativeButton(resources.getString(R.string.yes)) { dialog, id ->
+                        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+                        val editor = sharedPreferences.edit()
+                        editor.clear()
+                        editor.commit()
+                        PreferenceManager.setDefaultValues(context, R.xml.root_preferences, true)
+                    }
+                    .create()
+                    .show()
+                true
+            }
         }
     }
 }

@@ -1,12 +1,16 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
 import android.content.SharedPreferences
+import android.graphics.*
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
@@ -30,7 +34,6 @@ class PhrasesFragment : Fragment() {
     private lateinit var binding: FragmentPhrasesBinding
     private lateinit var sharedPreferences: SharedPreferences
     private val phraseViewModel: PhraseViewModel by viewModels()
-    private lateinit var phrasesList: RecyclerView
 
     private lateinit var sourceLang: Language
     private lateinit var destLang: Language
@@ -54,11 +57,9 @@ class PhrasesFragment : Fragment() {
             binding.phrasesListSwipeRefresh.isRefreshing = false
         }
 
-        phrasesList = binding.phrasesList
-
         phraseRecyclerAdapter = PhrasesRecyclerAdapter(context)
-        phrasesList.adapter = phraseRecyclerAdapter
-        phrasesList.layoutManager = LinearLayoutManager(activity)
+        binding.phrasesList.adapter = phraseRecyclerAdapter
+        binding.phrasesList.layoutManager = LinearLayoutManager(activity)
 
         addPhraseRecyclerView()
         refreshRecyclerViewData(sourceLang, destLang)
@@ -67,14 +68,18 @@ class PhrasesFragment : Fragment() {
     }
 
     private fun addPhraseRecyclerView() {
-        phraseRecyclerAdapter.clickListener = View.OnClickListener { view ->
-            val sourceView: TextView = view.findViewById(R.id.source_text)
-            Toast.makeText(context, "Phrase ${sourceView.text} clicked", Toast.LENGTH_SHORT).show()
-        }
+        val background = ColorDrawable()
+        val backgroundColor = Color.parseColor("#B00020")
+        val deleteIcon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_fluent_delete_24_filled)
+        val wrappedDeleteIcon = DrawableCompat.wrap(deleteIcon!!)
+        DrawableCompat.setTint(wrappedDeleteIcon, Color.WHITE)
+        val intrinsicWidth = deleteIcon?.intrinsicWidth
+        val intrinsicHeight = deleteIcon?.intrinsicHeight
+        val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
         val itemTouchHelperCallback =
             object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                     override fun onMove(
                         recyclerView: RecyclerView,
                         viewHolder: RecyclerView.ViewHolder,
@@ -95,18 +100,76 @@ class PhrasesFragment : Fragment() {
                         ).apply {
                             setAction("Undo") {
                                 phraseViewModel.add(phrase)
-                                phrasesList.scrollToPosition(position)
+                                binding.phrasesList.scrollToPosition(position)
                             }
                         }
+                    }
+
+                    override fun onChildDraw(
+                        c: Canvas,
+                        recyclerView: RecyclerView,
+                        viewHolder: RecyclerView.ViewHolder,
+                        dX: Float,
+                        dY: Float,
+                        actionState: Int,
+                        isCurrentlyActive: Boolean
+                    ) {
+                        val itemView = viewHolder.itemView
+                        val height = itemView.bottom - itemView.top
+                        val isCanceled = dX == 0f && !isCurrentlyActive
+
+                        if (isCanceled) {
+                            clearCanvas(c, itemView.right + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+                            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                            return
+                        }
+
+                        background.color = backgroundColor
+                        background.setBounds(
+                            itemView.right + dX.toInt(),
+                            itemView.top,
+                            itemView.right,
+                            itemView.bottom
+                        )
+                        background.draw(c)
+
+                        val deleteIconTop = itemView.top + (height - intrinsicHeight!!) / 2
+                        val deleteIconMargin = (height - intrinsicHeight) / 2
+                        val deleteIconLeft = (itemView.right - deleteIconMargin - intrinsicWidth!!)
+                        val deleteIconRight = itemView.right - deleteIconMargin
+                        val deleteIconBottom = deleteIconTop + intrinsicHeight
+
+                        wrappedDeleteIcon.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+                        wrappedDeleteIcon.draw(c)
+
+                        super.onChildDraw(
+                            c,
+                            recyclerView,
+                            viewHolder,
+                            dX,
+                            dY,
+                            actionState,
+                            isCurrentlyActive
+                        )
+                    }
+
+                    private fun clearCanvas(c: Canvas?, left: Float, top: Float, right: Float, bottom: Float) {
+                        c?.drawRect(left, top, right, bottom, clearPaint)
                     }
                 }
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(phrasesList)
+        itemTouchHelper.attachToRecyclerView(binding.phrasesList)
     }
 
     private fun refreshRecyclerViewData(sourceLang: Language, destLang: Language) {
         val phraseList = phraseViewModel.getPhrases(sourceLang.getCode(), destLang.getCode())
+
+        val didSetupWithSample = sharedPreferences.getBoolean("sample_database", true)
+
+        // Clear the database if we didn't set up the application to use the sample database
+        if (!didSetupWithSample)
+            phraseViewModel.deleteAll()
 
         if (oldPhraseList != phraseList) {
             oldPhraseList?.removeObservers(viewLifecycleOwner)

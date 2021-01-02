@@ -41,14 +41,8 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
         val destinationLanguage = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
         // Use device locale specific names if requested
-        val alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
-        if (alwaysDevLang) {
-            binding.editTextOriginLang.hint = sourceLanguage.getDeviceLangName()
-            binding.editTextDestLang.hint = destinationLanguage.getDeviceLangName()
-        } else {
-            binding.editTextOriginLang.hint = sourceLanguage.getNativeName()
-            binding.editTextDestLang.hint = destinationLanguage.getNativeName()
-        }
+        binding.editTextOriginLang.hint = sourceLanguage.getPreferredName(requireContext())
+        binding.editTextDestLang.hint = destinationLanguage.getPreferredName(requireContext())
 
         // Set language flags
         binding.addPhraseSheet.findViewById<ImageView>(R.id.sourceLangFlag).setImageDrawable(sourceLanguage.getFlag(requireContext()))

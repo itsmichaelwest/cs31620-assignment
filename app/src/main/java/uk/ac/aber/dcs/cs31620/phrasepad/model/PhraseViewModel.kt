@@ -13,6 +13,8 @@ class PhraseViewModel(application: Application): AndroidViewModel(application) {
 
     fun getDestPhraseFromSource(sourcePhrase: String): LiveData<Phrase> = repository.getDestPhraseFromSource(sourcePhrase)
 
+    fun getFourPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>> = repository.getFourPhrases(sourceLang, destLang)
+
     fun add(phrase: Phrase) = repository.insert(phrase)
 
     fun delete(phrase: Phrase) = repository.deletePhrase(phrase)

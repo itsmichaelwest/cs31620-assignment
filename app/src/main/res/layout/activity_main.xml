@@ -32,6 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginBottom="?attr/actionBarSize"
         app:navGraph="@navigation/navigation_graph" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

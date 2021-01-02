@@ -11,9 +11,6 @@ import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 
 class SetLanguagesAutocompleteAdapter(context: Context, private val layoutResource: Int, private val languages: MutableList<Language>) : ArrayAdapter<Language>(context, layoutResource, languages) {
-    var isDeviceLangNames: Boolean = false
-        get() = field
-        set(value) { field = value }
 
     override fun getCount(): Int = languages.size
 
@@ -22,12 +19,7 @@ class SetLanguagesAutocompleteAdapter(context: Context, private val layoutResour
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView?: LayoutInflater.from(context).inflate(layoutResource, parent, false)
         view.findViewById<ImageView>(R.id.languageFlag).setImageDrawable(languages[position].getFlag(context))
-
-        if (isDeviceLangNames)
-            view.findViewById<TextView>(R.id.languageName).text = languages[position].getDeviceLangName()
-        else
-            view.findViewById<TextView>(R.id.languageName).text = languages[position].getNativeName()
-
+        view.findViewById<TextView>(R.id.languageName).text = languages[position].getPreferredName(context)
         return view
     }
 }

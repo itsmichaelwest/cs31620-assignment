@@ -45,7 +45,7 @@
             app:endIconDrawable="@drawable/ic_fluent_dismiss_24_regular"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
-            style="@style/PhrasePad.TextInputLayout">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputOriginLang"
@@ -76,7 +76,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextDestLang"
-            style="@style/PhrasePad.TextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textNoSuggestions"

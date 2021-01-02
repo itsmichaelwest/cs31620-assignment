@@ -1,8 +1,8 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.settings
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,12 +77,31 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
         }
 
         binding.nativeToggleSwitch.setOnCheckedChangeListener { _, isChecked ->
-            adapter.isDeviceLangNames = isChecked
-            adapter.notifyDataSetChanged()
             with (sharedPreferences.edit()) {
                 putBoolean("always_dev_lang", isChecked)
                 apply()
             }
+            adapter.notifyDataSetChanged()
+        }
+
+        // Start with a sample database, English to Welsh with 20 phrases
+        binding.startWithSampleButton.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle(resources.getString(R.string.set_sample_dialog_title))
+                .setMessage(resources.getString(R.string.set_sample_dialog_message))
+                .setPositiveButton(resources.getString(R.string.yes)) { dialog, id ->
+                    // Set source language to English, destination to Welsh
+                    val editor = sharedPreferences.edit()
+                    editor.putString("source_lang", "eng")
+                    editor.putString("dest_lang", "cym")
+                    editor.putBoolean("sample_database", true)
+                    editor.apply()
+                    // Dismiss sheet and go to app
+                    this.dismiss()
+                }
+                .setNegativeButton(resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
         }
 
         return binding.root

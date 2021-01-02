@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="fontFamily">@font/merriweather_bold</item>
@@ -6,10 +7,6 @@
 
     <style name="PhrasePad.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="titleTextAppearance">@style/TextAppearance.App.Headline6</item>
-    </style>
-
-    <style name="PhrasePad.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
     </style>
 
     <!-- Bottom Sheet -->

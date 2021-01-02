@@ -1,18 +1,19 @@
 package uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.PhraseListItemBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 
+
 class PhrasesRecyclerAdapter(private val context: Context?) : RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder>() {
     private var data: MutableList<Phrase> = mutableListOf()
-    var clickListener: View.OnClickListener? = null
+    private var clickListener: View.OnClickListener? = null
 
     inner class ViewHolder(
         itemView: View,
@@ -42,6 +43,11 @@ class PhrasesRecyclerAdapter(private val context: Context?) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: PhrasesRecyclerAdapter.ViewHolder, position: Int) {
         holder.bindData(data[position])
+        holder.itemView.setOnClickListener{
+            val activity = holder.itemView.context as AppCompatActivity
+            val fragment = PhraseDetailFragment(getPhraseAt(position))
+            fragment.show(activity.supportFragmentManager, "phrase_detail_fragment")
+        }
     }
 
     fun changeData(data: MutableList<Phrase>) {
@@ -49,7 +55,5 @@ class PhrasesRecyclerAdapter(private val context: Context?) : RecyclerView.Adapt
         this.notifyDataSetChanged()
     }
 
-    fun getPhraseAt(id: Int): Phrase {
-        return data[id]
-    }
+    fun getPhraseAt(id: Int): Phrase = data[id]
 }

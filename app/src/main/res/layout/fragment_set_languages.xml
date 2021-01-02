@@ -49,7 +49,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show language names in your device language"
+            android:text="@string/always_dev_lang"
             android:layout_weight="1"/>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
@@ -101,14 +101,31 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/destLangDropdown"
-        style="@style/Widget.MaterialComponents.Button" />
+        app:layout_constraintTop_toBottomOf="@+id/destLangDropdown">
+
+        <Button
+            android:id="@+id/startWithSampleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_sample"
+            android:layout_alignParentStart="true"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:layout_alignParentEnd="true"
+            style="@style/Widget.MaterialComponents.Button" />
+
+    </RelativeLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

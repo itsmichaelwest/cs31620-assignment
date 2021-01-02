@@ -18,7 +18,6 @@
         <item name="android:navigationBarColor">?attr/colorSurface</item>
 
         <item name="toolbarStyle">@style/PhrasePad.Toolbar</item>
-        <item name="textInputStyle">@style/PhrasePad.TextInputLayout</item>
         <item name="bottomNavigationStyle">@style/PhrasePad.BottomNavigation</item>
         <item name="bottomSheetDialogTheme">@style/PhrasePad.BottomSheetDialog</item>
     </style>

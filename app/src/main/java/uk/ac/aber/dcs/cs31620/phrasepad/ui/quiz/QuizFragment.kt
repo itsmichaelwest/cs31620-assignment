@@ -3,20 +3,22 @@ package uk.ac.aber.dcs.cs31620.phrasepad.ui.quiz
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
-import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadRepository
+import androidx.recyclerview.widget.LinearLayoutManager
+import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentQuizBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -25,14 +27,17 @@ import java.util.*
  */
 class QuizFragment : Fragment() {
 
-    private var oldPhraseList: LiveData<List<Phrase>>? = null
-
     private lateinit var binding: FragmentQuizBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var quizRecyclerAdapter: QuizRecyclerAdapter
     private val phraseViewModel: PhraseViewModel by viewModels()
 
     private lateinit var sourceLang: Language
     private lateinit var destLang: Language
+
+    private lateinit var correct: Phrase
+
+    private var score = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,18 +49,45 @@ class QuizFragment : Fragment() {
         sourceLang = Language(Locale(sharedPreferences.getString("source_lang", "eng")!!))
         destLang = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
 
-        val phraseList = phraseViewModel.getPhrases(sourceLang.getCode(), destLang.getCode())
-        var returnList: MutableList<Phrase> = mutableListOf()
+        quizRecyclerAdapter = QuizRecyclerAdapter(context)
+        binding.quizQuestionList.adapter = quizRecyclerAdapter
+        binding.quizQuestionList.layoutManager = LinearLayoutManager(activity)
+        binding.score.text = resources.getString(R.string.quiz_your_score, score)
 
-        phraseList.observe(viewLifecycleOwner) { phrases ->
-            returnList = phrases.toMutableList()
-        }
+        quizRecyclerAdapter.setListener(object : QuizRecyclerAdapter.ItemClickListener {
+            override fun onItemClick(position: Int) {
+                val selected = quizRecyclerAdapter.getPhraseAt(position)
+                if (selected == correct) {
+                    Toast.makeText(context, "Correct!", Toast.LENGTH_SHORT).show()
+                    score++
+                    binding.score.text = resources.getString(R.string.quiz_your_score, score)
+                    refreshQuizQuestions()
+                } else {
+                    Toast.makeText(context, "Incorrect, try again.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
 
-        binding.buttonNewFrag.setOnClickListener {
-            val helper = QuizHelper()
-            helper.pickFourPhrases(returnList)
+        binding.buttonStartQuiz.setOnClickListener {
+            refreshQuizQuestions()
+            binding.buttonStartQuiz.visibility = View.GONE
+            binding.quizLayout.visibility = View.VISIBLE
         }
 
         return binding.root
+    }
+
+    private fun refreshQuizQuestions() {
+        val fourPhraseList = phraseViewModel.getFourPhrases(
+            sourceLang.getCode(),
+            destLang.getCode()
+        )
+
+        fourPhraseList.observe(viewLifecycleOwner) { phrases ->
+            quizRecyclerAdapter.changeData(phrases.toMutableList())
+
+            correct = phrases.shuffled().take(1)[0]
+            binding.phraseTested.text = correct.destPhrase
+        }
     }
 }

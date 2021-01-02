@@ -12,7 +12,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.RecyclerView
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
+import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhraseAddFragment
@@ -20,6 +22,7 @@ import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SetLanguagesFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.util.NotificationScheduler
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -82,16 +85,8 @@ class MainActivity : AppCompatActivity() {
                 ).getString("dest_lang", "eng")!!
             )
         )
-        var alwaysDevLang = PreferenceManager.getDefaultSharedPreferences(applicationContext).getBoolean(
-            "always_dev_lang",
-            false
-        )
-
         val langFlag = findViewById<ImageView>(R.id.langFlag) // We need to find the view by id for some reason, binding doesn't work
-        if (alwaysDevLang)
-            binding.toolbar.toolbarTitle.text = destinationLanguage.getDeviceLangName()
-        else
-            binding.toolbar.toolbarTitle.text = destinationLanguage.getNativeName()
+        binding.toolbar.toolbarTitle.text = destinationLanguage.getPreferredName(applicationContext)
         langFlag.setImageDrawable(destinationLanguage.getFlag(applicationContext))
 
         // Set up notification
@@ -100,7 +95,11 @@ class MainActivity : AppCompatActivity() {
             false
         )
         val notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel("1", resources.getString(R.string.notifications_header), NotificationManager.IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel(
+            "1",
+            resources.getString(R.string.notifications_header),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
         notificationManager.createNotificationChannel(channel)
         if (learningNotif)
             setUpScheduledNotification(false)
@@ -113,25 +112,8 @@ class MainActivity : AppCompatActivity() {
             OnSharedPreferenceChangeListener { sharedPreferences, key ->
                 when (key) {
                     "dest_lang" -> {
-                        alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
-                        if (alwaysDevLang)
-                            binding.toolbar.toolbarTitle.text = Language(
-                                Locale(
-                                    sharedPreferences.getString(
-                                        "dest_lang",
-                                        "eng"
-                                    )!!
-                                )
-                            ).getDeviceLangName()
-                        else
-                            binding.toolbar.toolbarTitle.text = Language(
-                                Locale(
-                                    sharedPreferences.getString(
-                                        "dest_lang",
-                                        "eng"
-                                    )!!
-                                )
-                            ).getNativeName()
+                        val language = Language(Locale(sharedPreferences.getString("dest_lang", "eng")!!))
+                        binding.toolbar.toolbarTitle.text = language.getPreferredName(applicationContext)
                         binding.toolbar.langFlag.setImageDrawable(
                             Language(
                                 Locale(
@@ -144,26 +126,7 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                     "always_dev_lang" -> {
-                        alwaysDevLang = sharedPreferences.getBoolean("always_dev_lang", false)
-                        if (alwaysDevLang) {
-                            binding.toolbar.toolbarTitle.text = Language(
-                                Locale(
-                                    sharedPreferences.getString(
-                                        "dest_lang",
-                                        "eng"
-                                    )!!
-                                )
-                            ).getDeviceLangName()
-                        } else {
-                            binding.toolbar.toolbarTitle.text = Language(
-                                Locale(
-                                    sharedPreferences.getString(
-                                        "dest_lang",
-                                        "eng"
-                                    )!!
-                                )
-                            ).getNativeName()
-                        }
+                        binding.toolbar.toolbarTitle.text = destinationLanguage.getPreferredName(applicationContext)
                     }
                     "daily_quiz_notification" -> {
                         learningNotif = !learningNotif
@@ -181,7 +144,26 @@ class MainActivity : AppCompatActivity() {
         // Set up bottom navigation
         val bottomNavigation = binding.bottomNavigation
         val bottomNavigationController = findNavController(R.id.navigation_fragment_host)
-        bottomNavigation.setupWithNavController(bottomNavigationController)
+        bottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.bnav_phrases -> {
+                    binding.floatingActionButton.show()
+                    bottomNavigationController.navigate(R.id.bnav_phrases)
+                    true
+                }
+                R.id.bnav_search -> {
+                    binding.floatingActionButton.hide()
+                    bottomNavigationController.navigate(R.id.bnav_search)
+                    true
+                }
+                R.id.bnav_quiz -> {
+                    binding.floatingActionButton.hide()
+                    bottomNavigationController.navigate(R.id.bnav_quiz)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     // Show the Add Phrase fragment
@@ -210,7 +192,14 @@ class MainActivity : AppCompatActivity() {
         builder.setContentTitle(resources.getString(R.string.notification_title))
         builder.setContentText(resources.getString(R.string.notification_content))
         builder.setSmallIcon(R.drawable.ic_notification_icon)
-        builder.setContentIntent(PendingIntent.getActivity(applicationContext, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT))
+        builder.setContentIntent(
+            PendingIntent.getActivity(
+                applicationContext, 0, Intent(
+                    this,
+                    MainActivity::class.java
+                ), PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        )
 
         val notificationIntent = Intent(this, NotificationScheduler::class.java)
         notificationIntent.putExtra(NotificationScheduler.NOTIFICATION_ID, 1)

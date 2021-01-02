@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">PhrasePad</string>
+    <string name="app_name">PhrasePad</string>
     <string name="phrases">Phrases</string>
     <string name="search">Search</string>
     <string name="quiz">Quizzes</string>
@@ -19,12 +20,17 @@
     <string name="set_language_header">Set language</string>
     <string name="set_language_message">To begin using PhrasePad, set your source and destination languages. You can change these at any time in Settings.</string>
     <string name="set_language_error">Select a language</string>
+    <string name="set_sample">Sample PhrasePad</string>
+    <string name="set_sample_dialog_title">Use sample database and phrases?</string>
+    <string name="set_sample_dialog_message">You can start PhrasePad with a pre-defined set of phrases between English and Welsh. This is a great way to demo functionality without needing to input data.
+
+Refresh the list to view the sample phrases.</string>
 
     <!-- Quizzes -->
     <string name="start_quiz">Start quiz</string>
     <string name="quiz_exit_early">Exit quiz?</string>
     <string name="quiz_exit_early_message">Your current progress will be lost!</string>
-    <string name="quiz_your_score">Your score is</string>
+    <string name="quiz_your_score">Your score is: %1$d</string>
 
     <!-- Preference Titles -->
     <string name="languages_header">Languages</string>
@@ -55,6 +61,9 @@
     <!-- Data Management Preferences -->
     <string name="clear_all">Reset PhrasePad</string>
     <string name="clear_all_summary">This will clear all phrase books. All saved phrases will be deleted!</string>
+    <string name="clear_all_dialog_message">All saved phrases will be deleted and settings will be reset to default. This cannot be undone!
+
+        The app will close to complete the reset.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

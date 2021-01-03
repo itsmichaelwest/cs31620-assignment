@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentSetLanguagesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
+import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleHelper
 import java.util.*
 
 class SetLanguagesFragment : BottomSheetDialogFragment() {
@@ -30,16 +31,17 @@ class SetLanguagesFragment : BottomSheetDialogFragment() {
     ): View {
         binding = FragmentSetLanguagesBinding.inflate(inflater, container, false)
 
-        val languageCodes = resources.getStringArray(R.array.languages_codes).toList()
-        val languageList: MutableList<Language> = mutableListOf()
-        for (language in languageCodes) {
-            languageList.add(Language(Locale(language)))
+        val languageList = LocaleHelper.getAll()
+        val languageStringList: MutableList<Language> = mutableListOf()
+
+        for (lang in languageList) {
+            languageStringList.add(Language(Locale(lang.iso3Language)))
         }
 
         val adapter = SetLanguagesAutocompleteAdapter(
             requireContext(),
             R.layout.language_list_item,
-            languageList
+            languageStringList
         )
 
         (binding.sourceLangDropdown.editText as? AutoCompleteTextView)?.setAdapter(adapter)

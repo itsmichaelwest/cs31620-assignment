@@ -4,15 +4,11 @@
     <PreferenceCategory app:title="@string/languages_header">
 
         <ListPreference
-            android:entries="@array/languages"
-            android:entryValues="@array/languages_codes"
             android:key="source_lang"
             android:title="@string/source_language"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            android:entries="@array/languages"
-            android:entryValues="@array/languages_codes"
             android:key="dest_lang"
             android:title="@string/destination_language"
             app:useSimpleSummaryProvider="true" />

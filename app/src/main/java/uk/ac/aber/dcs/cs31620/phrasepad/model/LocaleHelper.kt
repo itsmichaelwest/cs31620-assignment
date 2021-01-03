@@ -3,7 +3,7 @@ package uk.ac.aber.dcs.cs31620.phrasepad.model
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 
 // Helper class to retrieve the flag of a locale/language
-enum class LocaleFlagHelper(val iso3Language: String, val flag: Int) {
+enum class LocaleHelper(val iso3Language: String, val flag: Int) {
     AFRIKAANS("afr", R.drawable.za),
     ALBANIAN("sqi", R.drawable.al),
     AMHARIC("amh", R.drawable.et),
@@ -94,7 +94,9 @@ enum class LocaleFlagHelper(val iso3Language: String, val flag: Int) {
     ZULU("zul", R.drawable.za);
 
     companion object {
-        fun get(searchValue: String): LocaleFlagHelper =
+        fun get(searchValue: String): LocaleHelper =
             values().first { it.iso3Language == searchValue }
+
+        fun getAll(): Array<LocaleHelper> = values()
     }
 }

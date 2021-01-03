@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhraseDetailBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
-import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleFlagHelper
+import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleHelper
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
@@ -29,12 +29,12 @@ class PhraseDetailFragment(private var phrase: Phrase) : BottomSheetDialogFragme
     ): View {
         binding = FragmentPhraseDetailBinding.inflate(inflater, container, false)
 
-        binding.sourceLangFlag.setImageResource(LocaleFlagHelper.get(phrase.sourceLang).flag)
+        binding.sourceLangFlag.setImageResource(LocaleHelper.get(phrase.sourceLang).flag)
         binding.sourceLangName.text =
             Language(Locale(phrase.sourceLang)).getPreferredName(requireContext())
         binding.sourceLangText.text = phrase.sourcePhrase
 
-        binding.destLangFlag.setImageResource(LocaleFlagHelper.get(phrase.destLang).flag)
+        binding.destLangFlag.setImageResource(LocaleHelper.get(phrase.destLang).flag)
         binding.destLangName.text =
             Language(Locale(phrase.destLang)).getPreferredName(requireContext())
         binding.destLangText.text = phrase.destPhrase

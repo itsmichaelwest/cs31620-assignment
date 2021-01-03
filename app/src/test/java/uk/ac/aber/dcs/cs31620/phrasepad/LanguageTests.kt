@@ -3,7 +3,7 @@ package uk.ac.aber.dcs.cs31620.phrasepad
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
-import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleFlagHelper
+import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleHelper
 import java.util.*
 
 class LanguageTests {
@@ -34,7 +34,7 @@ class LanguageTests {
     @Test
     fun getFlagDrawable() {
         val french = Language(Locale.FRANCE)
-        val flag = LocaleFlagHelper.get(french.getCode())
+        val flag = LocaleHelper.get(french.getCode())
         assertEquals(R.drawable.fr, flag.flag)
     }
 }

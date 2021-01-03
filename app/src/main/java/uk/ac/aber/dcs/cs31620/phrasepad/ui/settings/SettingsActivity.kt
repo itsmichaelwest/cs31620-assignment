@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
 import android.widget.Toast
@@ -12,12 +13,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.SettingsActivityBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
+import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleHelper
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
@@ -141,6 +144,17 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
+            setLanguagePreferencesFields()
+
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+                when (key) {
+                    "always_dev_lang" -> {
+                        setLanguagePreferencesFields()
+                    }
+                }
+            }
+
             // Reset preferences button. This is really messy, the app intentionally crashes when we
             // clear the preferences. There must be a better way, but we need the app to close anyway
             // so the user can select a new language pair.
@@ -151,8 +165,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                     .setMessage(resources.getString(R.string.clear_all_dialog_message))
                     .setPositiveButton(resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
                     .setNegativeButton(resources.getString(R.string.yes)) { _, _ ->
-                        val sharedPreferences =
-                            PreferenceManager.getDefaultSharedPreferences(context)
                         val editor = sharedPreferences.edit()
                         editor.clear()
                         editor.apply()
@@ -162,6 +174,26 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
                     .show()
                 true
             }
+        }
+
+        private fun setLanguagePreferencesFields() {
+            val languageList = LocaleHelper.getAll()
+            val languageCodeList: Array<CharSequence?> = arrayOfNulls(languageList.size)
+            val languageStringList: Array<CharSequence?> = arrayOfNulls(languageList.size)
+
+            for (i in languageCodeList.indices)
+                languageCodeList[i] = languageList[i].iso3Language
+
+            for (i in languageStringList.indices)
+                languageStringList[i] = Language(Locale(languageList[i].iso3Language)).getPreferredName(requireContext())
+
+            val sourceLangList = findPreference<ListPreference>("source_lang")
+            sourceLangList?.entryValues = languageCodeList
+            sourceLangList?.entries = languageStringList
+
+            val destLangList = findPreference<ListPreference>("dest_lang")
+            destLangList?.entryValues = languageCodeList
+            destLangList?.entries = languageStringList
         }
     }
 }

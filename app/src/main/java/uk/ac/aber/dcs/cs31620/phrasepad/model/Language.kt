@@ -33,7 +33,7 @@ class Language(var locale: Locale) {
 
     // Get the flag for that country, using the LocaleHelper
     fun getFlag(context: Context): Drawable? =
-        ContextCompat.getDrawable(context, LocaleFlagHelper.get(locale.isO3Language).flag)
+        ContextCompat.getDrawable(context, LocaleHelper.get(locale.isO3Language).flag)
 
     // Return the ISO 639-3 code for the language
     fun getCode(): String = locale.isO3Language

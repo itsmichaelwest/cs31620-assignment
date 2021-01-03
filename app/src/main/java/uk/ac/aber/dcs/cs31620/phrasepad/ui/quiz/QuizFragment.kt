@@ -34,6 +34,7 @@ class QuizFragment : Fragment() {
     private lateinit var correct: Phrase
 
     private var score = 0
+    private var totalTaken = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,15 +51,18 @@ class QuizFragment : Fragment() {
         binding.quizQuestionList.layoutManager = LinearLayoutManager(activity)
         binding.score.text = resources.getString(R.string.quiz_your_score, score)
 
-        quizRecyclerAdapter.setListener(object : QuizRecyclerAdapter.ItemClickListener {
+        quizRecyclerAdapter.setListener(object : QuizItemClickListener {
             override fun onItemClick(position: Int) {
                 val selected = quizRecyclerAdapter.getPhraseAt(position)
                 if (selected.destPhrase == correct.destPhrase) {
                     score++
+                    totalTaken++
                     binding.score.text = resources.getString(R.string.quiz_your_score, score)
                     refreshQuizQuestions()
                 } else {
-                    Toast.makeText(context, "Incorrect, try again.", Toast.LENGTH_SHORT).show()
+                    totalTaken++
+                    Toast.makeText(context, resources.getString(R.string.quiz_incorrect), Toast.LENGTH_SHORT).show()
+                    refreshQuizQuestions()
                 }
             }
         })
@@ -109,6 +113,16 @@ class QuizFragment : Fragment() {
     }
 
     private fun finishQuiz() {
-
+        AlertDialog.Builder(requireContext())
+            .setTitle(resources.getString(R.string.quiz_complete_title))
+            .setMessage(resources.getString(R.string.quiz_complete_message, score, totalTaken))
+            .setPositiveButton(resources.getString(R.string.finish)) { dialog, _ ->
+                dialog.dismiss()
+                binding.buttonStartQuiz.visibility = View.VISIBLE
+                binding.quizLayout.visibility = View.GONE
+            }
+            .setCancelable(false)
+            .create()
+            .show()
     }
 }

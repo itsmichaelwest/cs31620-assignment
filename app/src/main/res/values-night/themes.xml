@@ -15,7 +15,7 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
         <!-- Navigation bar -->
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">@color/dark_mode_navbar</item>
 
         <item name="toolbarStyle">@style/PhrasePad.Toolbar</item>
         <item name="bottomNavigationStyle">@style/PhrasePad.BottomNavigation</item>

@@ -24,4 +24,6 @@
     <color name="secondary_200">#FF03DAC5</color>
     <color name="secondary_100">#FF70EFDE</color>
     <color name="secondary_50">#FFC8FFF4</color>
+
+    <color name="dark_mode_navbar">#FF2D2D2D</color>
 </resources>

@@ -12,6 +12,7 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 class QuizRecyclerAdapter(private val context: Context?) :
     RecyclerView.Adapter<QuizRecyclerAdapter.ViewHolder>() {
     private var data: List<Phrase> = listOf()
+    private var listener: QuizItemClickListener? = null
 
     inner class ViewHolder(itemView: View, private val phraseToTest: TextView) :
         RecyclerView.ViewHolder(itemView) {
@@ -44,17 +45,8 @@ class QuizRecyclerAdapter(private val context: Context?) :
 
     fun getPhraseAt(id: Int): Phrase = data[id]
 
-    //Declarative interface
-    private var listener: ItemClickListener? = null
-
     //set method
-    fun setListener(listener: ItemClickListener?) {
+    fun setListener(listener: QuizItemClickListener?) {
         this.listener = listener
-    }
-
-    //Defining interface
-    interface ItemClickListener {
-        //Achieve the click method, passing the subscript.
-        fun onItemClick(position: Int)
     }
 }

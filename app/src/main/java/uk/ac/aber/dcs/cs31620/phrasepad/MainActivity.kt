@@ -10,6 +10,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         // Handle home screen shortcut to Add Phrase
         if ("ADDPHRASE" == intent.action) {
             showAddPhraseFragment(findViewById(R.id.layout))
+            intent.action = ""
         }
     }
 
@@ -147,16 +149,12 @@ class MainActivity : AppCompatActivity() {
         // Set up bottom navigation
         val bottomNavigation = binding.bottomNavigation
         val bottomNavigationController = findNavController(R.id.navigation_fragment_host)
+        //bottomNavigation.setupWithNavController(bottomNavigationController)
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.bnav_phrases -> {
                     binding.floatingActionButton.show()
                     bottomNavigationController.navigate(R.id.bnav_phrases)
-                    true
-                }
-                R.id.bnav_search -> {
-                    binding.floatingActionButton.hide()
-                    bottomNavigationController.navigate(R.id.bnav_search)
                     true
                 }
                 R.id.bnav_quiz -> {

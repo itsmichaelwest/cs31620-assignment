@@ -1,31 +1,28 @@
 package uk.ac.aber.dcs.cs31620.phrasepad
 
-import android.app.Application
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import uk.ac.aber.dcs.cs31620.phrasepad.data.PhrasepadDatabase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseDao
-import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.Executors
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class DatabaseTests {
     private lateinit var dao: PhraseDao
     private lateinit var db: PhrasepadDatabase
-    private lateinit var viewModel: PhraseViewModel
 
     @JvmField
     @Rule
@@ -33,12 +30,12 @@ class DatabaseTests {
 
     @Before
     fun createDatabase() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, PhrasepadDatabase::class.java).build()
-        dao = db.phrasepadDao()
+        db = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), PhrasepadDatabase::class.java)
+            .allowMainThreadQueries()
+            .setTransactionExecutor(Executors.newSingleThreadExecutor())
+            .build()
 
-        val application = Mockito.mock(Application::class.java)
-        viewModel = PhraseViewModel(application)
+        dao = db.phrasepadDao()
     }
 
     @After
@@ -60,14 +57,14 @@ class DatabaseTests {
             "Bonjour"
         )
 
+        dao.insertSinglePhrase(phrase)
+        val result = dao.testGetDestPhraseFromSource("Good morning")
 
-        viewModel.add(phrase)
-
-        assertEquals(viewModel.getDestPhraseFromSource("Good morning"), phrase.sourcePhrase)
+        assertEquals(result.sourcePhrase, phrase.sourcePhrase)
     }
 
     @Test
-    fun checkInsertingPhrase() {
+    fun insertAndDeletePhrase() {
         val sourceLanguage = Language(Locale.ENGLISH)
         val destinationLanguage = Language(Locale.FRENCH)
 
@@ -80,7 +77,13 @@ class DatabaseTests {
         )
 
         dao.insertSinglePhrase(phrase)
+        val result = dao.testGetDestPhraseFromSource("Good morning")
 
-        val r = dao.getDestPhraseFromSource("Good morning")
+        assertEquals(result.sourcePhrase, phrase.sourcePhrase)
+
+        dao.deletePhrase(phrase)
+
+        val resultNowNull = dao.testGetDestPhraseFromSource("Good morning")
+        assertNull(resultNowNull)
     }
 }

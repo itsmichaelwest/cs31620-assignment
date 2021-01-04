@@ -158,7 +158,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
             setLanguagePreferencesFields()
 
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-            sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+            sharedPreferences.registerOnSharedPreferenceChangeListener { _, key ->
                 when (key) {
                     "always_dev_lang" -> {
                         setLanguagePreferencesFields()

@@ -101,4 +101,14 @@ interface PhraseDao {
     """
     )
     fun getFourPhrases(sourceLang: String, destLang: String): LiveData<List<Phrase>>
+
+    /**
+     * Retrieve a [Phrase] object based on a search for the source string. This function is for testing only, as
+     * it doesn't return a [LiveData] object.
+     * @param sourcePhrase The source phrase as a string.
+     * @return A [Phrase] object.
+     * @since 1.0
+     */
+    @Query("SELECT * FROM phrases WHERE sourcePhrase = :sourcePhrase")
+    fun testGetDestPhraseFromSource(sourcePhrase: String): Phrase
 }

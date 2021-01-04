@@ -29,14 +29,15 @@ class PhraseDetailFragment(private var phrase: Phrase) : BottomSheetDialogFragme
     ): View {
         binding = FragmentPhraseDetailBinding.inflate(inflater, container, false)
 
-        binding.sourceLangFlag.setImageResource(LocaleHelper.get(phrase.sourceLang).flag)
-        binding.sourceLangName.text =
-            Language(Locale(phrase.sourceLang)).getPreferredName(requireContext())
+        val source = Language(Locale(phrase.sourceLang))
+        val destination = Language(Locale(phrase.destLang))
+
+        binding.sourceLangFlag.setImageDrawable(source.getFlag(requireContext()))
+        binding.sourceLangName.text = source.getPreferredName(requireContext())
         binding.sourceLangText.text = phrase.sourcePhrase
 
-        binding.destLangFlag.setImageResource(LocaleHelper.get(phrase.destLang).flag)
-        binding.destLangName.text =
-            Language(Locale(phrase.destLang)).getPreferredName(requireContext())
+        binding.destLangFlag.setImageDrawable(destination.getFlag(requireContext()))
+        binding.destLangName.text = destination.getPreferredName(requireContext())
         binding.destLangText.text = phrase.destPhrase
 
         binding.deletePhrase.setOnClickListener {

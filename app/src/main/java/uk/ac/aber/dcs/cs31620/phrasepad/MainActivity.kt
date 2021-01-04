@@ -23,8 +23,6 @@ import java.util.*
 /**
  * Main app Activity. Handles setting up the toolbar and navigation, and registering
  * an [OnSharedPreferenceChangeListener] to listen for language preference changes.
- *
- * @since 1.0
  */
 class MainActivity : AppCompatActivity() {
 
@@ -171,20 +169,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Show [PhraseAddFragment]. This is set using the onClick parameter in the Activity's XML.
-     * @since 1.0
-     */
     fun showAddPhraseFragment(view: View) {
         val fragment = PhraseAddFragment()
         fragment.show(supportFragmentManager, "add_phrase_fragment")
     }
 
-    /**
-     * Show [SetLanguagesFragment] upon first run of the app, where the language preferences will
-     * be null.
-     * @since 1.0
-     */
     private fun firstRunSetLanguage(view: View) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -205,9 +194,6 @@ class MainActivity : AppCompatActivity() {
      *
      * Thanks to StackOverflow for some guidance on this one:
      * https://stackoverflow.com/questions/36902667/how-to-schedule-notification-in-android
-     *
-     * @param willCancel Set to false if the notification is to not be cancelled, true if it will be.
-     * @since 1.0
      */
     private fun setUpScheduledNotification(willCancel: Boolean) {
         val builder = Notification.Builder(this, "1")

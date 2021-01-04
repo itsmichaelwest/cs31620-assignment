@@ -26,8 +26,6 @@ import java.util.*
 
 /**
  * A [Fragment] to deal with displaying the phrases in a [RecyclerView] using [PhrasesRecyclerAdapter].
- *
- * @version 1.0
  */
 class PhrasesFragment : Fragment() {
 
@@ -195,9 +193,6 @@ class PhrasesFragment : Fragment() {
     /**
      * Refresh the data in the [RecyclerView]. This is called on [onCreateView] and also when the user
      * pulls down on the scroll view to refresh.
-     * @param sourceLang The source language of the phrase as a [Language] object.
-     * @param destLang The destination language of the phrase as a [Language] object.
-     * @since 1.0
      */
     private fun refreshRecyclerViewData(sourceLang: Language, destLang: Language) {
         val phraseList = phraseViewModel.getPhrases(sourceLang.getCode(), destLang.getCode())

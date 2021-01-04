@@ -13,7 +13,6 @@ import android.os.Parcelable
  * Thanks to StackOverflow for some guidance on this one:
  * https://stackoverflow.com/questions/36902667/how-to-schedule-notification-in-android
  *
- * @since 1.0
  * @see [BroadcastReceiver]
  */
 class NotificationScheduler : BroadcastReceiver() {

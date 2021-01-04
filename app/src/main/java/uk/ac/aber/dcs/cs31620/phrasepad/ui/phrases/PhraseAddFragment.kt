@@ -66,10 +66,10 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
             }
 
             if (savePhrase(
-                    binding.textInputOriginLang.text.toString(),
-                    binding.textInputDestLang.text.toString(),
                     sourceLanguage,
-                    destinationLanguage
+                    destinationLanguage,
+                    binding.textInputOriginLang.text.toString(),
+                    binding.textInputDestLang.text.toString()
                 )
             ) {
                 dismiss()
@@ -105,23 +105,22 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
      * @param destination The destination phrase.
      * @return True if the phrase was added successfully, false if not (generally because the text
      * fields are empty)
-     * @since 1.0
      */
     private fun savePhrase(
-        origin: String,
-        destination: String,
         sourceLang: Language,
-        destLang: Language
+        destinationLang: Language,
+        sourcePhrase: String,
+        destinationPhrase: String
     ): Boolean {
-        return if (origin.isEmpty() || destination.isEmpty()) {
+        return if (sourcePhrase.isEmpty() || destinationPhrase.isEmpty()) {
             false
         } else {
             val phrase = Phrase(
                 0,
                 sourceLang.getCode(),
-                destLang.getCode(),
-                origin,
-                destination
+                destinationLang.getCode(),
+                sourcePhrase,
+                destinationPhrase
             )
 
             phraseViewModel.add(phrase)

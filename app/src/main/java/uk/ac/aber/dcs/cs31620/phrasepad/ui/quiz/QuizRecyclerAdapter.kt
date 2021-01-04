@@ -12,8 +12,6 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 /**
  * Adapter to provide a binding from an app-specific data set to views that are displayed within a [RecyclerView].
  *
- * @param context [Context]
- * @since 1.0
  * @see [RecyclerView.Adapter]
  */
 class QuizRecyclerAdapter(private val context: Context?) :
@@ -45,30 +43,13 @@ class QuizRecyclerAdapter(private val context: Context?) :
 
     override fun getItemCount(): Int = data.size
 
-    /**
-     * Changes the data used by the [RecyclerView]. Will call [notifyDataSetChanged] to tell the view
-     * that the data has been updated.
-     * @param data A [List] of [Phrase] objects to replace the existing data in the view.
-     * @since 1.0
-     */
     fun changeData(data: List<Phrase>) {
         this.data = data
         this.notifyDataSetChanged()
     }
 
-    /**
-     * Retrieves the [Phrase] at the selected index.
-     * @param id The selected index in the [RecyclerView].
-     * @return The [Phrase] bound to that index.
-     * @since 1.0
-     */
     fun getPhraseAt(id: Int): Phrase = data[id]
 
-    /**
-     * Set the [QuizItemClickListener] for the [RecyclerView].
-     * @param listener The [QuizItemClickListener] to set.
-     * @since 1.0
-     */
     fun setListener(listener: QuizItemClickListener?) {
         this.listener = listener
     }

@@ -27,8 +27,6 @@ import java.util.*
 /**
  * Base Activity class for the Settings screen. Implements a [SharedPreferences.OnSharedPreferenceChangeListener]
  * to keep an eye out for preference changes and update various parts of the user interface to match.
- *
- * @since 1.0
  */
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -140,7 +138,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         }
     }
 
-    // Go back to main activity when back button in toolbar is pressed
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
@@ -149,7 +146,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
     /**
      * A Fragment that deals with inflating the PreferenceScreen XML, setting up the language preference
      * fields, and resetting preferences.
-     * @since 1.0
      */
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -190,7 +186,6 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         /**
          * Set up the language preference [ListPreference] fields with language data assembled using
          * [LocaleHelper].
-         * @since 1.0
          */
         private fun setLanguagePreferencesFields() {
             val languageList = LocaleHelper.getAll()

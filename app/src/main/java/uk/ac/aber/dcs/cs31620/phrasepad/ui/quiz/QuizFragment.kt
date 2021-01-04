@@ -23,8 +23,6 @@ import java.util.*
 /**
  * A [Fragment] to deal with displaying a select number phrases in a [RecyclerView] using [QuizRecyclerAdapter].
  * Users then select a specific phrase and the logic will check to see if that phrase is correct.
- *
- * @since 1.0
  */
 class QuizFragment : Fragment() {
 
@@ -93,7 +91,6 @@ class QuizFragment : Fragment() {
 
     /**
      * Refresh the quiz questions by retrieving a new set of four phrases from the database.
-     * @since 1.0
      */
     private fun refreshQuizQuestions() {
         val fourPhraseList = phraseViewModel.getFourPhrases(
@@ -122,7 +119,6 @@ class QuizFragment : Fragment() {
 
     /**
      * Display an [AlertDialog] showing the user their score and then hide the quiz layout from the view.
-     * @since 1.0
      */
     private fun finishQuiz() {
         AlertDialog.Builder(requireContext())

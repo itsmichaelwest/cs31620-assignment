@@ -14,7 +14,6 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
  * Adapter to provide a binding from an app-specific data set to views that are displayed within a [RecyclerView].
  *
  * @param context [Context]
- * @since 1.0
  * @see [RecyclerView.Adapter]
  */
 class PhrasesRecyclerAdapter(private val context: Context?) :

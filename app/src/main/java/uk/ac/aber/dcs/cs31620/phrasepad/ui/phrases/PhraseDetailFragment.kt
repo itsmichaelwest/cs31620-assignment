@@ -20,9 +20,6 @@ import java.util.*
 /**
  * A [BottomSheetDialogFragment] that shows more detailed information about a [Phrase] and allows
  * them to delete it.
- *
- * @param phrase The selected [Phrase].
- * @since 1.0
  */
 class PhraseDetailFragment(private var phrase: Phrase) : BottomSheetDialogFragment() {
 

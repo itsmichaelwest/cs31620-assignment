@@ -10,7 +10,6 @@ import androidx.room.*
  * @param destLang The destination language of the phrase as a string. This should usually be an ISO 639-3 code.
  * @param sourcePhrase The source phrase.
  * @param destPhrase The destination phrase.
- * @since 1.0
  * @see [PhraseDao]
  */
 @Entity(tableName = "phrases")

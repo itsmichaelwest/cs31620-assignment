@@ -21,8 +21,6 @@ import java.util.*
 
 /**
  * A [BottomSheetDialogFragment] that deals with setting up the app on first run.
- *
- * @since 1.0
  */
 class SetLanguagesFragment : BottomSheetDialogFragment() {
 

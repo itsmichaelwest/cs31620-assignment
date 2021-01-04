@@ -9,7 +9,6 @@ import uk.ac.aber.dcs.cs31620.phrasepad.R
  *
  * @param iso3Language A three-letter abbreviation of the locale's language, in ISO 639-3 format.
  * @param flag Reference to the drawable resource for the locale's flag.
- * @since 1.0
  * @see [Language]
  */
 enum class LocaleHelper(val iso3Language: String, val flag: Int) {
@@ -103,20 +102,9 @@ enum class LocaleHelper(val iso3Language: String, val flag: Int) {
     ZULU("zul", R.drawable.za);
 
     companion object {
-        /**
-         * Get a specific [LocaleHelper] object based on a search value.
-         * @param searchValue A three-letter abbreviation of the locale's language, in ISO 639-3 format.
-         * @return A [LocaleHelper] object if the [searchValue] can be found.
-         * @since 1.0
-         */
         fun get(searchValue: String): LocaleHelper =
             values().first { it.iso3Language == searchValue }
 
-        /**
-         * Get all [LocaleHelper] objects as an array.
-         * @return All [LocaleHelper] object in an [Array].
-         * @since 1.0
-         */
         fun getAll(): Array<LocaleHelper> = values()
     }
 }

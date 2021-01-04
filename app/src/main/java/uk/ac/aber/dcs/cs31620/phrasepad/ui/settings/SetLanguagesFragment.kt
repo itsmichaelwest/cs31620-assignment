@@ -8,13 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentSetLanguagesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.LocaleHelper
+import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhrasesRecyclerAdapter
 import java.util.*
 
+
+/**
+ * A [BottomSheetDialogFragment] that deals with setting up the app on first run.
+ *
+ * @since 1.0
+ */
 class SetLanguagesFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentSetLanguagesBinding

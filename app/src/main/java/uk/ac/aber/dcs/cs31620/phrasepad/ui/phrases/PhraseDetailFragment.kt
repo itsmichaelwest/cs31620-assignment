@@ -17,7 +17,13 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
-
+/**
+ * A [BottomSheetDialogFragment] that shows more detailed information about a [Phrase] and allows
+ * them to delete it.
+ *
+ * @param phrase The selected [Phrase].
+ * @since 1.0
+ */
 class PhraseDetailFragment(private var phrase: Phrase) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentPhraseDetailBinding

@@ -7,6 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcelable
 
+/**
+ * Receiver class for broadcast intents.
+ *
+ * @since 1.0
+ * @see [BroadcastReceiver]
+ */
 class NotificationScheduler : BroadcastReceiver() {
 
     companion object {

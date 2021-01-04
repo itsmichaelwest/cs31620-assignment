@@ -11,15 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentQuizBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
+import uk.ac.aber.dcs.cs31620.phrasepad.ui.phrases.PhrasesRecyclerAdapter
 import java.util.*
 
 /**
- * A simple [Fragment] subclass.
+ * A [Fragment] to deal with displaying a select number phrases in a [RecyclerView] using [QuizRecyclerAdapter].
+ * Users then select a specific phrase and the logic will check to see if that phrase is correct.
+ *
+ * @since 1.0
  */
 class QuizFragment : Fragment() {
 
@@ -74,7 +79,6 @@ class QuizFragment : Fragment() {
         binding.buttonEndQuiz.setOnClickListener {
             AlertDialog.Builder(context)
                 .setTitle(resources.getString(R.string.quiz_exit_early))
-                .setMessage(resources.getString(R.string.quiz_exit_early_message))
                 .setPositiveButton(resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
                 .setNegativeButton(resources.getString(R.string.yes)) { dialog, _ ->
                     dialog.dismiss()
@@ -87,6 +91,10 @@ class QuizFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Refresh the quiz questions by retrieving a new set of four phrases from the database.
+     * @since 1.0
+     */
     private fun refreshQuizQuestions() {
         val fourPhraseList = phraseViewModel.getFourPhrases(
             sourceLang.getCode(),
@@ -112,6 +120,10 @@ class QuizFragment : Fragment() {
         }
     }
 
+    /**
+     * Display an [AlertDialog] showing the user their score and then hide the quiz layout from the view.
+     * @since 1.0
+     */
     private fun finishQuiz() {
         AlertDialog.Builder(requireContext())
             .setTitle(resources.getString(R.string.quiz_complete_title))

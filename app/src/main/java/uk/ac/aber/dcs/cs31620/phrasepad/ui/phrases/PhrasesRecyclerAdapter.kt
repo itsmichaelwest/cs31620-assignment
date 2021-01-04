@@ -10,8 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.PhraseListItemBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 
+/**
+ * Adapter to provide a binding from an app-specific data set to views that are displayed within a [RecyclerView].
+ *
+ * @param context [Context]
+ * @since 1.0
+ * @see [RecyclerView.Adapter]
+ */
 class PhrasesRecyclerAdapter(private val context: Context?) :
     RecyclerView.Adapter<PhrasesRecyclerAdapter.ViewHolder>() {
+
     private var data: MutableList<Phrase> = mutableListOf()
     private var clickListener: View.OnClickListener? = null
 
@@ -24,6 +32,11 @@ class PhrasesRecyclerAdapter(private val context: Context?) :
             itemView.setOnClickListener(clickListener)
         }
 
+        /**
+         * Binds the [Phrase] data to the UI elements of the view.
+         * @param phrase The [Phrase] object to be bound.
+         * @since 1.0
+         */
         fun bindData(phrase: Phrase) {
             source.text = phrase.sourcePhrase
             translated.text = phrase.destPhrase
@@ -53,10 +66,22 @@ class PhrasesRecyclerAdapter(private val context: Context?) :
         }
     }
 
+    /**
+     * Changes the data used by the [RecyclerView]. Will call [notifyDataSetChanged] to tell the view
+     * that the data has been updated.
+     * @param data A [MutableList] of [Phrase] objects to replace the existing data in the view.
+     * @since 1.0
+     */
     fun changeData(data: MutableList<Phrase>) {
         this.data = data
         this.notifyDataSetChanged()
     }
 
+    /**
+     * Retrieves the [Phrase] at the selected index.
+     * @param id The selected index in the [RecyclerView].
+     * @return The [Phrase] bound to that index.
+     * @since 1.0
+     */
     fun getPhraseAt(id: Int): Phrase = data[id]
 }

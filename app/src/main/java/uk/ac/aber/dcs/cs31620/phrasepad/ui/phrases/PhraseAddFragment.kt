@@ -19,6 +19,11 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
+/**
+ * A [BottomSheetDialogFragment] that allows users to add new [Phrase] objects to the database.
+ *
+ * @since 1.0
+ */
 class PhraseAddFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentAddPhraseBinding
@@ -92,6 +97,16 @@ class PhraseAddFragment : BottomSheetDialogFragment() {
         }
     }
 
+    /**
+     * Save the inserted [Phrase] to the database using [PhraseViewModel].
+     * @param sourceLang The source language of the phrase as a [Language] object.
+     * @param destLang The destination language of the phrase as a [Language] object.
+     * @param origin The source phrase.
+     * @param destination The destination phrase.
+     * @return True if the phrase was added successfully, false if not (generally because the text
+     * fields are empty)
+     * @since 1.0
+     */
     private fun savePhrase(
         origin: String,
         destination: String,

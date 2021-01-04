@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
@@ -16,7 +17,6 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.FragmentPhrasesBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
@@ -24,6 +24,11 @@ import uk.ac.aber.dcs.cs31620.phrasepad.model.Phrase
 import uk.ac.aber.dcs.cs31620.phrasepad.model.PhraseViewModel
 import java.util.*
 
+/**
+ * A [Fragment] to deal with displaying the phrases in a [RecyclerView] using [PhrasesRecyclerAdapter].
+ *
+ * @version 1.0
+ */
 class PhrasesFragment : Fragment() {
 
     private var oldPhraseList: LiveData<List<Phrase>>? = null
@@ -65,6 +70,12 @@ class PhrasesFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Add the Phrase [RecyclerView]. This code actually deals with setting up an [ItemTouchHelper]
+     * to allow users to swipe the phrase from right to left to delete.
+     *
+     * Tutorial followed from: https://medium.com/@kitek/recyclerview-swipe-to-delete-easier-than-you-thought-cff67ff5e5f6
+     */
     private fun addPhraseRecyclerView() {
         val background = ColorDrawable()
         val backgroundColor = Color.parseColor("#B00020")
@@ -92,16 +103,11 @@ class PhrasesFragment : Fragment() {
                     val phrase: Phrase = phraseRecyclerAdapter.getPhraseAt(position)
                     phraseViewModel.delete(phrase)
 
-                    Snackbar.make(
-                        activity!!.findViewById(android.R.id.content),
-                        "Deleted",
-                        Snackbar.LENGTH_LONG
-                    ).apply {
-                        setAction("Undo") {
-                            phraseViewModel.add(phrase)
-                            binding.phrasesList.scrollToPosition(position)
-                        }
-                    }
+                    Toast.makeText(
+                        context,
+                        resources.getString(R.string.deleted, phrase.destPhrase),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onChildDraw(
@@ -186,6 +192,13 @@ class PhrasesFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.phrasesList)
     }
 
+    /**
+     * Refresh the data in the [RecyclerView]. This is called on [onCreateView] and also when the user
+     * pulls down on the scroll view to refresh.
+     * @param sourceLang The source language of the phrase as a [Language] object.
+     * @param destLang The destination language of the phrase as a [Language] object.
+     * @since 1.0
+     */
     private fun refreshRecyclerViewData(sourceLang: Language, destLang: Language) {
         val phraseList = phraseViewModel.getPhrases(sourceLang.getCode(), destLang.getCode())
 

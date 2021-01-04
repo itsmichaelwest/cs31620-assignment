@@ -10,7 +10,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ActivityMainBinding
 import uk.ac.aber.dcs.cs31620.phrasepad.databinding.ToolbarHeroBinding
@@ -21,6 +20,12 @@ import uk.ac.aber.dcs.cs31620.phrasepad.ui.settings.SettingsActivity
 import uk.ac.aber.dcs.cs31620.phrasepad.util.NotificationScheduler
 import java.util.*
 
+/**
+ * Main app Activity. Handles setting up the toolbar and navigation, and registering
+ * an [OnSharedPreferenceChangeListener] to listen for language preference changes.
+ *
+ * @since 1.0
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -149,7 +154,6 @@ class MainActivity : AppCompatActivity() {
         // Set up bottom navigation
         val bottomNavigation = binding.bottomNavigation
         val bottomNavigationController = findNavController(R.id.navigation_fragment_host)
-        //bottomNavigation.setupWithNavController(bottomNavigationController)
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.bnav_phrases -> {
@@ -167,13 +171,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Show the Add Phrase fragment
+    /**
+     * Show [PhraseAddFragment]. This is set using the onClick parameter in the Activity's XML.
+     * @since 1.0
+     */
     fun showAddPhraseFragment(view: View) {
         val fragment = PhraseAddFragment()
         fragment.show(supportFragmentManager, "add_phrase_fragment")
     }
 
-    // Show a fragment to allow users to set their language pair on first run
+    /**
+     * Show [SetLanguagesFragment] upon first run of the app, where the language preferences will
+     * be null.
+     * @since 1.0
+     */
     private fun firstRunSetLanguage(view: View) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -187,7 +198,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Set up the scheduled notification
+    /**
+     * Set up or cancel a scheduled notification. Currently the notification is scheduled to fire
+     * at 12:00 noon. This function is quite rough and notification functionality is likely to be
+     * buggy at best.
+     * @param willCancel Set to false if the notification is to not be cancelled, true if it will be.
+     * @since 1.0
+     */
     private fun setUpScheduledNotification(willCancel: Boolean) {
         val builder = Notification.Builder(this, "1")
         builder.setContentTitle(resources.getString(R.string.notification_title))

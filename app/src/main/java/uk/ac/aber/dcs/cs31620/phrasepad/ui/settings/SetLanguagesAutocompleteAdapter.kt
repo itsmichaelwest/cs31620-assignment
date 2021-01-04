@@ -10,6 +10,14 @@ import android.widget.TextView
 import uk.ac.aber.dcs.cs31620.phrasepad.R
 import uk.ac.aber.dcs.cs31620.phrasepad.model.Language
 
+/**
+ * An adapter class to deal with filling the dropdown list of languages during the first run experience.
+ *
+ * @param context [Context]
+ * @param layoutResource [Int]
+ * @param languages A [MutableList] of [Language] objects.
+ * @since 1.0
+ */
 class SetLanguagesAutocompleteAdapter(
     context: Context,
     private val layoutResource: Int,

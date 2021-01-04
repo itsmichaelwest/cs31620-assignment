@@ -202,6 +202,10 @@ class MainActivity : AppCompatActivity() {
      * Set up or cancel a scheduled notification. Currently the notification is scheduled to fire
      * at 12:00 noon. This function is quite rough and notification functionality is likely to be
      * buggy at best.
+     *
+     * Thanks to StackOverflow for some guidance on this one:
+     * https://stackoverflow.com/questions/36902667/how-to-schedule-notification-in-android
+     *
      * @param willCancel Set to false if the notification is to not be cancelled, true if it will be.
      * @since 1.0
      */
@@ -220,8 +224,8 @@ class MainActivity : AppCompatActivity() {
         )
 
         val notificationIntent = Intent(this, NotificationScheduler::class.java)
-        notificationIntent.putExtra(NotificationScheduler.NOTIFICATION_ID, 1)
-        notificationIntent.putExtra(NotificationScheduler.NOTIFICATION, builder.build())
+        notificationIntent.putExtra(NotificationScheduler.id, 1)
+        notificationIntent.putExtra(NotificationScheduler.notification, builder.build())
         val pendingIntent = PendingIntent.getBroadcast(
             this,
             0,
